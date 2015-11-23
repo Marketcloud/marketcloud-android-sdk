@@ -36,6 +36,7 @@ public class Marketcloud {
     Orders orders;
     Addresses addresses;
     Currencies currencies;
+    Taxes taxes;
 
     /**
      * Constructor.
@@ -50,6 +51,7 @@ public class Marketcloud {
         brands = new Brands(publicKey, context);
         categories = new Categories(publicKey, context);
         shippings = new Shippings(publicKey, context);
+        taxes = new Taxes(publicKey, context);
         tokenManager = new TokenManager(context);
         users = new Users(publicKey, tokenManager, context);
         carts = new Carts(publicKey, tokenManager, context);

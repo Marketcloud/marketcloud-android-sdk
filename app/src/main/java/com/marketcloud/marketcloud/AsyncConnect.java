@@ -36,10 +36,15 @@ import cz.msebera.android.httpclient.entity.StringEntity;
  */
 public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
 
+    private Context context;
     private JSONArray ja;
     private boolean keepAlive = true;
-    private Context context;
 
+    /**
+     * Contructor.
+     *
+     * @param ct application context
+     */
     public AsyncConnect(Context ct) {
         context = ct;
     }
@@ -54,15 +59,14 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
     protected JSONArray doInBackground(String... params) {
 
         try {
-            //switcha tipo di connessione
+            //switcha tipo di connessione (possibilità: GET, POST, DELETE, PUT e PATCH)
             String type = params[0];
 
             //prepare the connection
             SyncHttpClient client = new SyncHttpClient();
+            client.addHeader("Authorization", params[2]);
 
-            //get the connection parameters
-            String publicKey = params[2];
-
+            //prepare a response handler
             ResponseHandler rh = new ResponseHandler() {
 
                 @Override
@@ -87,9 +91,7 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
                 }
             };
 
-            client.addHeader("Authorization", publicKey);
-
-            //connect to the given url
+            //connect to the given url using the proper request
             switch (type) {
                 case "get":
                     client.get(params[1], rh);
@@ -116,6 +118,6 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
 
         } catch (UnsupportedEncodingException ignored) {}
 
-            return null;
+        return null;
     }
 }

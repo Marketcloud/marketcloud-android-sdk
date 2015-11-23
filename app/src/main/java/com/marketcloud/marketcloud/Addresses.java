@@ -49,7 +49,7 @@ public class Addresses {
      */
     public Addresses(String key, TokenManager tokenManager, Context ct) {
         publicKey = key;
-        api = new APIDoor(key);
+        api = new APIDoor(context, key);
         token = tokenManager.getSessionToken();
         context = ct;
     }
@@ -68,9 +68,10 @@ public class Addresses {
                 JSONObject jo = toJsonObject(name, email);
 
                 if (jo != null)
-                    return (JSONObject) new AsyncPost(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "post",
                                             "http://api.marketcloud.it/v0/addresses",
                                             publicKey + ":" + token,
                                             jo.toString()})
@@ -117,9 +118,10 @@ public class Addresses {
     public JSONObject create(JSONObject jsonObject) {
         try {
             if (token != null)
-                return (JSONObject) new AsyncPost(context)
+                return (JSONObject) new AsyncConnect(context)
                         .execute(
                                 new String[]{
+                                        "post",
                                         "http://api.marketcloud.it/v0/addresses",
                                         publicKey + ":" + token,
                                         jsonObject.toString()})
@@ -165,9 +167,10 @@ public class Addresses {
     public JSONObject create(String json) {
         try {
             if (token != null)
-                return (JSONObject) new AsyncPost(context)
+                return (JSONObject) new AsyncConnect(context)
                         .execute(
                                 new String[]{
+                                        "post",
                                         "http://api.marketcloud.it/v0/addresses",
                                         publicKey + ":" + token,
                                         json})
@@ -220,9 +223,10 @@ public class Addresses {
                 JSONObject jo = toJsonObject(name, email);
 
                 if (jo != null)
-                    return (JSONObject) new AsyncPut(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "put",
                                             "http://api.marketcloud.it/v0/addresses/" + id,
                                             publicKey + ":" + token,
                                             jo.toString()})
@@ -265,9 +269,10 @@ public class Addresses {
     public JSONObject update(String id, JSONObject jsonObject) {
         try {
             if (token != null)
-                return (JSONObject) new AsyncPut(context)
+                return (JSONObject) new AsyncConnect(context)
                         .execute(
                                 new String[]{
+                                        "put",
                                         "http://api.marketcloud.it/v0/addresses/" + id,
                                         publicKey + ":" + token,
                                         jsonObject.toString()})
@@ -309,9 +314,10 @@ public class Addresses {
     public JSONObject update(String id, String json) {
         try {
             if (token != null)
-                return (JSONObject) new AsyncPut(context)
+                return (JSONObject) new AsyncConnect(context)
                         .execute(
                                 new String[]{
+                                        "put",
                                         "http://api.marketcloud.it/v0/addresses/" + id,
                                         publicKey + ":" + token,
                                         json})

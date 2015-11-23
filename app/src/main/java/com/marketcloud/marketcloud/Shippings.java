@@ -37,7 +37,7 @@ public class Shippings {
      * @param key the public key to access the APIs
      */
     public Shippings(String key, Context ct) {
-        api = new APIDoor(key);
+        api = new APIDoor(ct, key);
     }
 
     /**

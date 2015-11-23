@@ -29,35 +29,39 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
- * AsyncPut class. <br />
+ * AsyncGet class. <br />
  * <br />
- * Performs an asynchronous HTTP PUT operation, creating a background thread that executes a blocking call,
+ * Performs an asynchronous HTTP operation, creating a background thread that executes a blocking call,
  * resulting in an asynchronous call.
  */
-public class AsyncPut extends AsyncTask<String, Void, JSONArray> {
+public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
 
     private JSONArray ja;
     private boolean keepAlive = true;
     private Context context;
 
-    public AsyncPut(Context ct) {
+    public AsyncConnect(Context ct) {
         context = ct;
     }
 
     /**
-     * Processes an HTTP PUT request in background.
+     * Processes an HTTP request in background.
      *
-     * @param params the url and the headers of the HTTP request
+     * @param params the url, the headers and the parameters of the HTTP request
      * @return a JSONArray containing the response to the request
      */
     @Override
     protected JSONArray doInBackground(String... params) {
 
         try {
+            //switcha tipo di connessione
+            String type = params[0];
+
             //prepare the connection
             SyncHttpClient client = new SyncHttpClient();
 
-            client.addHeader("Authorization", params[1]); //key
+            //get the connection parameters
+            String publicKey = params[2];
 
             ResponseHandler rh = new ResponseHandler() {
 
@@ -66,14 +70,12 @@ public class AsyncPut extends AsyncTask<String, Void, JSONArray> {
 
                     //parse the response
                     try {
-
                         String response = new String(responseBody, "UTF-8");
 
                         if (response.charAt(0) != '[')
                             response = "[" + response + "]";
 
                         ja = new JSONArray(response);
-
                     } catch (JSONException | UnsupportedEncodingException e) {
                         keepAlive = false;
                     }
@@ -85,8 +87,26 @@ public class AsyncPut extends AsyncTask<String, Void, JSONArray> {
                 }
             };
 
+            client.addHeader("Authorization", publicKey);
+
             //connect to the given url
-            client.put(context, params[0], new StringEntity(params[2]), "application/json", rh); //url, json
+            switch (type) {
+                case "get":
+                    client.get(params[1], rh);
+                    break;
+                case "post":
+                    client.post(context, params[1], new StringEntity(params[3]), "application/json", rh);
+                    break;
+                case "delete":
+                    client.delete(params[1] + params[3], rh);
+                    break;
+                case "patch":
+                    client.patch(context, params[1], new StringEntity("[" + params[3] + "]"), "application/json", rh);
+                    break;
+                case "put":
+                    client.put(context, params[1], new StringEntity(params[3]), "application/json", rh);
+                    break;
+            }
 
             //keep checking until the value is available or the break condition is met
             while (keepAlive) {
@@ -94,9 +114,8 @@ public class AsyncPut extends AsyncTask<String, Void, JSONArray> {
                     return ja;
             }
 
+        } catch (UnsupportedEncodingException ignored) {}
+
             return null;
-        } catch (Exception e) {
-            return null;
-        }
     }
 }

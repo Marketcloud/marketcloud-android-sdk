@@ -1,2 +1,2 @@
 # marketcloud-android-sdk
-(Android SDK)
+The official repository for Marketcloud Android SDK (beta)

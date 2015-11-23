@@ -15,6 +15,8 @@
 
 package com.marketcloud.marketcloud;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -34,8 +36,8 @@ public class Brands {
      *
      * @param key the public key to access the APIs
      */
-    public Brands(String key) {
-        api = new APIDoor(key);
+    public Brands(String key, Context ct) {
+        api = new APIDoor(ct, key);
     }
 
     /**

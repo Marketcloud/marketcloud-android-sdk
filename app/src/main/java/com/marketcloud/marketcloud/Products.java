@@ -37,7 +37,7 @@ public class Products {
      * @param key the public key to access the APIs
      */
     public Products(String key, Context context) {
-        api = new APIDoor(key);
+        api = new APIDoor(context, key);
     }
 
     /**

@@ -47,7 +47,7 @@ public class Marketcloud {
         context = ct;
         publicKey = key;
         products = new Products(publicKey, context);
-        brands = new Brands(publicKey);
+        brands = new Brands(publicKey, context);
         categories = new Categories(publicKey, context);
         shippings = new Shippings(publicKey, context);
         tokenManager = new TokenManager(context);

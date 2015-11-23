@@ -15,6 +15,8 @@
 
 package com.marketcloud.marketcloud;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,13 +33,15 @@ import java.util.concurrent.ExecutionException;
 public class APIDoor {
 
     private String publicKey = "";
+    private Context context;
 
     /**
      * Constructor.
      *
      * @param key the public key to access the APIs
      */
-    public APIDoor(String key) {
+    public APIDoor(Context ct, String key) {
+        context = ct;
         publicKey = key;
     }
 
@@ -51,7 +55,14 @@ public class APIDoor {
     public JSONObject getById(final String baseURL, final String id) {
 
         try {
-            return (JSONObject) new AsyncGet().execute(new String[] {baseURL + id, publicKey}).get().get(0);
+            return (JSONObject) new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "get",
+                                    baseURL + id,
+                                    publicKey})
+                    .get()
+                    .get(0);
         } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
             return null;
         }
@@ -68,7 +79,14 @@ public class APIDoor {
     public JSONObject getById(final String baseURL, final String id, final String token) {
 
         try {
-            return (JSONObject) new AsyncGet().execute(new String[]{baseURL + id, publicKey + ":" + token}).get().get(0);
+            return (JSONObject) new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "get",
+                                    baseURL + id,
+                                    publicKey + ":" + token})
+                    .get()
+                    .get(0);
         } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
             return null;
         }
@@ -100,7 +118,13 @@ public class APIDoor {
         }
 
         try {
-            return new AsyncGet().execute(new String[] {url, publicKey}).get();
+            return new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "get",
+                                    url,
+                                    publicKey})
+                    .get();
         } catch (InterruptedException | ExecutionException e) {
             return null;
         }
@@ -133,7 +157,13 @@ public class APIDoor {
         }
 
         try {
-            return new AsyncGet().execute(new String[] {url, publicKey + ":" + token}).get();
+            return new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "get",
+                                    url,
+                                    publicKey + ":" + token})
+                    .get();
         } catch (InterruptedException | ExecutionException e) {
             return null;
         }
@@ -148,7 +178,13 @@ public class APIDoor {
      */
     public JSONArray getInstanceList(String url, String token) {
         try {
-            return new AsyncGet().execute(new String[] {url, publicKey + ":" + token}).get();
+            return new AsyncConnect(context)
+                    .execute(
+                            new String[] {
+                                    "get",
+                                    url,
+                                    publicKey + ":" + token})
+                    .get();
         } catch (InterruptedException | ExecutionException e) {
             return null;
         }
@@ -164,7 +200,15 @@ public class APIDoor {
      */
     public JSONObject delete(String url, String id, String token) {
         try {
-            return (JSONObject) new AsyncDelete().execute(new String[] {url, publicKey, token, id}).get().get(0);
+            return (JSONObject) new AsyncConnect(context)
+                    .execute(
+                            new String[] {
+                                    "delete",
+                                    url,
+                                    publicKey + ":" + token,
+                                    id})
+                    .get()
+                    .get(0);
         } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
             return null;
         }

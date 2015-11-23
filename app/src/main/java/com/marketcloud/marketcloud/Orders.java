@@ -44,7 +44,7 @@ public class Orders {
      */
     public Orders(String key, TokenManager tokenManager, Context ct) {
         publicKey = key;
-        api = new APIDoor(key);
+        api = new APIDoor(context, key);
         token = tokenManager.getSessionToken();
         context = ct;
     }
@@ -69,9 +69,10 @@ public class Orders {
                         Integer.parseInt(userid));
 
                 if (jo != null)
-                    return (JSONObject) new AsyncPost(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "post",
                                             "http://api.marketcloud.it/v0/orders",
                                             publicKey + ":" + token,
                                             jo.toString(),})
@@ -104,9 +105,10 @@ public class Orders {
                         Integer.parseInt(userid));
 
                 if (jo != null)
-                    return (JSONObject) new AsyncPost(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "post",
                                             "http://api.marketcloud.it/v0/orders",
                                             publicKey + ":" + token,
                                             jo.toString(),})
@@ -137,9 +139,10 @@ public class Orders {
                         Integer.parseInt(userid));
 
                 if (jo != null)
-                    return (JSONObject) new AsyncPost(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "post",
                                             "http://api.marketcloud.it/v0/orders",
                                             publicKey + ":" + token,
                                             jo.toString(),})
@@ -183,9 +186,10 @@ public class Orders {
         if (token != null)
             try {
                 if (jo != null)
-                    return (JSONObject) new AsyncPost(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "post",
                                             "http://api.marketcloud.it/v0/orders",
                                             publicKey + ":" + token,
                                             jo.toString(),})
@@ -242,9 +246,10 @@ public class Orders {
                         Integer.parseInt(userid));
 
                 if (jo != null)
-                    return (JSONObject) new AsyncPut(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "put",
                                             "http://api.marketcloud.it/v0/orders",
                                             publicKey + ":" + token,
                                             jo.toString(),})
@@ -277,9 +282,10 @@ public class Orders {
                         Integer.parseInt(userid));
 
                 if (jo != null)
-                    return (JSONObject) new AsyncPut(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "put",
                                             "http://api.marketcloud.it/v0/orders",
                                             publicKey + ":" + token,
                                             jo.toString(),})
@@ -310,9 +316,10 @@ public class Orders {
                         Integer.parseInt(userid));
 
                 if (jo != null)
-                    return (JSONObject) new AsyncPut(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "put",
                                             "http://api.marketcloud.it/v0/orders",
                                             publicKey + ":" + token,
                                             jo.toString(),})
@@ -349,9 +356,10 @@ public class Orders {
         if (token != null)
             try {
                 if (jo != null)
-                    return (JSONObject) new AsyncPut(context)
+                    return (JSONObject) new AsyncConnect(context)
                             .execute(
                                     new String[]{
+                                            "put",
                                             "http://api.marketcloud.it/v0/orders",
                                             publicKey + ":" + token,
                                             jo.toString(),})

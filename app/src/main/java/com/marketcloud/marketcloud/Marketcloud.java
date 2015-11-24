@@ -21,6 +21,10 @@ import android.content.Context;
  * Marketcloud class. <br />
  * <br />
  * Main class of the SDK: creates an instance of all the objects that will be used in the application.
+ * <br />
+ * <br />
+ * WARNING: THE CONNECTION IS NOT CRYPTED! WE ARE USING STANDARD HTTP UNSAFE CONNECTIONS, AND NOT HTTPS. DO NOT
+ * SEND SENSIBLE/PRIVATE/PERSONAL DATA USING THE SERVICE!
  */
 public class Marketcloud {
 

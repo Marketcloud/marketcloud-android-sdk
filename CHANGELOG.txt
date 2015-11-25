@@ -1,0 +1,7 @@
+CHANGELOG
+
+v0.9.2 --> fixed user creation methods: now the return is a JSONObject with its ID and data, and not a boolean anymore
+
+v0.9.1 --> fixed public modifier to Marketcloud attributes 
+
+v0.9 --> first public release. all classes implemented. NO HTTPS

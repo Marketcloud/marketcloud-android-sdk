@@ -26,11 +26,11 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
- * APIDoor class. <br />
+ * Utilities class. <br />
  * <br />
  * This class provides a set of easy-to-use common methods, s.a. getById, delete, etc..<br />
  */
-public class APIDoor {
+public class Utilities {
 
     private String publicKey = "";
     private Context context;
@@ -40,7 +40,7 @@ public class APIDoor {
      *
      * @param key the public key to access the APIs
      */
-    public APIDoor(Context ct, String key) {
+    public Utilities(Context ct, String key) {
         context = ct;
         publicKey = key;
     }
@@ -73,10 +73,57 @@ public class APIDoor {
      *
      * @param baseURL endpoint of the database
      * @param id the id of the object that the user wants to retrieve
+     * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
+     */
+    public JSONObject getById(final String baseURL, final int id) {
+
+        try {
+            return (JSONObject) new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "get",
+                                    baseURL + id,
+                                    publicKey})
+                    .get()
+                    .get(0);
+        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns the data about the object with the given ID.
+     *
+     * @param baseURL endpoint of the database
+     * @param id the id of the object that the user wants to retrieve
      * @param token the session token that grants that the user is logged in
      * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
      */
     public JSONObject getById(final String baseURL, final String id, final String token) {
+
+        try {
+            return (JSONObject) new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "get",
+                                    baseURL + id,
+                                    publicKey + ":" + token})
+                    .get()
+                    .get(0);
+        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns the data about the object with the given ID.
+     *
+     * @param baseURL endpoint of the database
+     * @param id the id of the object that the user wants to retrieve
+     * @param token the session token that grants that the user is logged in
+     * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
+     */
+    public JSONObject getById(final String baseURL, final int id, final String token) {
 
         try {
             return (JSONObject) new AsyncConnect(context)

@@ -18,9 +18,11 @@ package com.marketcloud.marketcloud;
 import android.content.Context;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Shippings class. <br />
@@ -29,7 +31,7 @@ import java.util.HashMap;
  */
 public class Shippings {
 
-    private APIDoor api;
+    private Utilities api;
 
     /**
      * Constructor.
@@ -37,7 +39,7 @@ public class Shippings {
      * @param key the public key to access the APIs
      */
     public Shippings(String key, Context ct) {
-        api = new APIDoor(ct, key);
+        api = new Utilities(ct, key);
     }
 
     /**
@@ -47,7 +49,18 @@ public class Shippings {
      * @return a JSONObject containing the data about the given shipping, or null if the ID does not belong to any shipping
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(final String id) {
+    public JSONObject getById(final String id) throws InterruptedException, ExecutionException, JSONException {
+        return api.getById("http://api.marketcloud.it/v0/shippings/", id);
+    }
+
+    /**
+     * Returns the data about the shipping with the given ID.
+     *
+     * @param id the id of the shipping that the user wants to retrieve
+     * @return a JSONObject containing the data about the given shipping, or null if the ID does not belong to any shipping
+     */
+    @SuppressWarnings("unused")
+    public JSONObject getById(final int id) throws InterruptedException, ExecutionException, JSONException {
         return api.getById("http://api.marketcloud.it/v0/shippings/", id);
     }
 
@@ -58,7 +71,7 @@ public class Shippings {
      * @return a JSONArray containing a list of shippings that comply with the given filter
      */
     @SuppressWarnings("unused")
-    public JSONArray list(HashMap<String, Object> map) {
+    public JSONArray list(HashMap<String, Object> map) throws ExecutionException, InterruptedException {
         return api.list("http://api.marketcloud.it/v0/shippings?", map);
     }
 }

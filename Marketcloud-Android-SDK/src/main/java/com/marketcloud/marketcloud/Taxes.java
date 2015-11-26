@@ -18,13 +18,15 @@ package com.marketcloud.marketcloud;
 import android.content.Context;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 public class Taxes {
 
-    private APIDoor api;
+    private Utilities api;
 
     /**
      * Constructor.
@@ -32,7 +34,7 @@ public class Taxes {
      * @param key the public key to access the APIs
      */
     public Taxes(String key, Context ct) {
-        api = new APIDoor(ct, key);
+        api = new Utilities(ct, key);
     }
 
     /**
@@ -42,7 +44,18 @@ public class Taxes {
      * @return a JSONObject containing the data about the given tax, or null if the ID does not belong to any tax
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(final String id) {
+    public JSONObject getById(final String id) throws InterruptedException, ExecutionException, JSONException {
+        return api.getById("http://api.marketcloud.it/v0/taxes/", id);
+    }
+
+    /**
+     * Returns the data about the tax with the given ID.
+     *
+     * @param id the id of the tax that the user wants to retrieve
+     * @return a JSONObject containing the data about the given tax, or null if the ID does not belong to any tax
+     */
+    @SuppressWarnings("unused")
+    public JSONObject getById(final int id) throws InterruptedException, ExecutionException, JSONException {
         return api.getById("http://api.marketcloud.it/v0/taxes/", id);
     }
 
@@ -53,7 +66,7 @@ public class Taxes {
      * @return a JSONArray containing a list of taxes that comply with the given filter
      */
     @SuppressWarnings("unused")
-    public JSONArray list(HashMap<String, Object> map) {
+    public JSONArray list(HashMap<String, Object> map) throws ExecutionException, InterruptedException {
         return api.list("http://api.marketcloud.it/v0/taxes?", map);
     }
 }

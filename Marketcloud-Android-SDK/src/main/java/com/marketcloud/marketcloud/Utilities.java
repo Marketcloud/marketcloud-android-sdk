@@ -52,20 +52,16 @@ public class Utilities {
      * @param id the id of the object that the user wants to retrieve
      * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
      */
-    public JSONObject getById(final String baseURL, final String id) {
+    public JSONObject getById(final String baseURL, final String id) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
 
-        try {
-            return (JSONObject) new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "get",
-                                    baseURL + id,
-                                    publicKey})
-                    .get()
-                    .get(0);
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
-            return null;
-        }
+        return (JSONObject) new AsyncConnect(context)
+                .execute(
+                        new String[]{
+                                "get",
+                                baseURL + id,
+                                publicKey})
+                .get()
+                .get(0);
     }
 
     /**
@@ -75,20 +71,16 @@ public class Utilities {
      * @param id the id of the object that the user wants to retrieve
      * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
      */
-    public JSONObject getById(final String baseURL, final int id) {
+    public JSONObject getById(final String baseURL, final int id) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
 
-        try {
-            return (JSONObject) new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "get",
-                                    baseURL + id,
-                                    publicKey})
-                    .get()
-                    .get(0);
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
-            return null;
-        }
+        return (JSONObject) new AsyncConnect(context)
+                .execute(
+                        new String[]{
+                                "get",
+                                baseURL + id,
+                                publicKey})
+                .get()
+                .get(0);
     }
 
     /**
@@ -99,20 +91,16 @@ public class Utilities {
      * @param token the session token that grants that the user is logged in
      * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
      */
-    public JSONObject getById(final String baseURL, final String id, final String token) {
+    public JSONObject getById(final String baseURL, final String id, final String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
 
-        try {
-            return (JSONObject) new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "get",
-                                    baseURL + id,
-                                    publicKey + ":" + token})
-                    .get()
-                    .get(0);
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
-            return null;
-        }
+        return (JSONObject) new AsyncConnect(context)
+                .execute(
+                        new String[]{
+                                "get",
+                                baseURL + id,
+                                publicKey + ":" + token})
+                .get()
+                .get(0);
     }
 
     /**
@@ -123,20 +111,16 @@ public class Utilities {
      * @param token the session token that grants that the user is logged in
      * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
      */
-    public JSONObject getById(final String baseURL, final int id, final String token) {
+    public JSONObject getById(final String baseURL, final int id, final String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
 
-        try {
-            return (JSONObject) new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "get",
-                                    baseURL + id,
-                                    publicKey + ":" + token})
-                    .get()
-                    .get(0);
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
-            return null;
-        }
+        return (JSONObject) new AsyncConnect(context)
+                .execute(
+                        new String[]{
+                                "get",
+                                baseURL + id,
+                                publicKey + ":" + token})
+                .get()
+                .get(0);
     }
 
     /**
@@ -146,7 +130,7 @@ public class Utilities {
      * @param m HashMap containing a list of filters
      * @return a JSONArray containing a list of objects that comply with the given filter
      */
-    public JSONArray list(final String baseURL, final HashMap<String, Object> m) {
+    public JSONArray list(final String baseURL, final HashMap<String, Object> m) throws ExecutionException, InterruptedException {
 
         String url = baseURL;
 
@@ -164,17 +148,13 @@ public class Utilities {
             index++;
         }
 
-        try {
-            return new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "get",
-                                    url,
-                                    publicKey})
-                    .get();
-        } catch (InterruptedException | ExecutionException e) {
-            return null;
-        }
+        return new AsyncConnect(context)
+                .execute(
+                        new String[]{
+                                "get",
+                                url,
+                                publicKey})
+                .get();
     }
 
     /**
@@ -185,7 +165,7 @@ public class Utilities {
      * @param m HashMap containing a list of filters
      * @return a JSONArray containing a list of objects that comply with the given filter
      */
-    public JSONArray list(final String baseURL, String token, final HashMap<String, Object> m) {
+    public JSONArray list(final String baseURL, String token, final HashMap<String, Object> m) throws ExecutionException, InterruptedException {
 
         String url = baseURL.substring(0, baseURL.length() - 1) + "?";
 
@@ -203,17 +183,13 @@ public class Utilities {
             index++;
         }
 
-        try {
-            return new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "get",
-                                    url,
-                                    publicKey + ":" + token})
-                    .get();
-        } catch (InterruptedException | ExecutionException e) {
-            return null;
-        }
+        return new AsyncConnect(context)
+                .execute(
+                        new String[]{
+                                "get",
+                                url,
+                                publicKey + ":" + token})
+                .get();
     }
 
     /**
@@ -223,18 +199,14 @@ public class Utilities {
      * @param token a session token that identifies the user
      * @return a list with the data of all the users
      */
-    public JSONArray getInstanceList(String url, String token) {
-        try {
-            return new AsyncConnect(context)
-                    .execute(
-                            new String[] {
-                                    "get",
-                                    url,
-                                    publicKey + ":" + token})
-                    .get();
-        } catch (InterruptedException | ExecutionException e) {
-            return null;
-        }
+    public JSONArray getInstanceList(String url, String token) throws ExecutionException, InterruptedException {
+        return new AsyncConnect(context)
+                .execute(
+                        new String[]{
+                                "get",
+                                url,
+                                publicKey + ":" + token})
+                .get();
     }
 
     /**
@@ -245,19 +217,34 @@ public class Utilities {
      * @param token a session token that identifies the user
      * @return if the request was correct, it returns a status true. note: this happens even if the instance was already deleted
      */
-    public JSONObject delete(String url, String id, String token) {
-        try {
-            return (JSONObject) new AsyncConnect(context)
-                    .execute(
-                            new String[] {
-                                    "delete",
-                                    url,
-                                    publicKey + ":" + token,
-                                    id})
-                    .get()
-                    .get(0);
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
-            return null;
-        }
+    public JSONObject delete(String url, String id, String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        return (JSONObject) new AsyncConnect(context)
+                .execute(
+                        new String[]{
+                                "delete",
+                                url,
+                                publicKey + ":" + token,
+                                id})
+                .get()
+                .get(0);
+    }
+
+    /**
+     * Retrieves (if it exists and is in a known position) the id of an instance, saved in a JSONObject.
+     *
+     * @param jsonObject the  json that will be analyzed
+     * @return the id (if exists)
+     */
+    @SuppressWarnings("unused")
+    public int getIdFromJSONObject(JSONObject jsonObject) throws JSONException {
+
+        if (jsonObject != null)
+            if (jsonObject.has("id"))
+                return jsonObject.getInt("id");
+            else if (jsonObject.has("data"))
+                if (jsonObject.getJSONObject("data").has("id"))
+                    return jsonObject.getJSONObject("data").getInt("id");
+
+        return -1;
     }
 }

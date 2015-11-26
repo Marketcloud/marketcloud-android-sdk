@@ -32,7 +32,7 @@ public class Currencies {
 
     private String publicKey;
     private Context context;
-    private APIDoor api;
+    private Utilities api;
     private String token;
 
     /**
@@ -44,7 +44,7 @@ public class Currencies {
      */
     public Currencies(String key, TokenManager tokenManager, Context ct) {
         publicKey = key;
-        api = new APIDoor(ct, key);
+        api = new Utilities(ct, key);
         token = tokenManager.getSessionToken();
         context = ct;
     }
@@ -57,23 +57,10 @@ public class Currencies {
      * @return true if the creation was successful
      */
     @SuppressWarnings("unused")
-    public boolean create(String name, String formatting) {
-        try {
-            JSONObject jsonObject = toJsonObject(name, formatting);
+    public boolean create(String name, String formatting) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        JSONObject jsonObject = toJsonObject(name, formatting);
 
-            if (jsonObject != null)
-                return (boolean) ((JSONObject) new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "post",
-                                        "http://api.marketcloud.it/v0/currencies",
-                                        publicKey + ":" + token,
-                                        jsonObject.toString()})
-                        .get()
-                        .get(0))
-                        .get("status");
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException ignored) {}
-        return false;
+        return jsonObject != null && (boolean) ((JSONObject) new AsyncConnect(context).execute(new String[]{"post", "http://api.marketcloud.it/v0/currencies", publicKey + ":" + token, jsonObject.toString()}).get().get(0)).get("status");
     }
 
     /**
@@ -82,7 +69,7 @@ public class Currencies {
      * @return a list of all the currencies
      */
     @SuppressWarnings("unused")
-    public JSONArray get() {
+    public JSONArray get() throws ExecutionException, InterruptedException {
         if (token != null)
             return api.getInstanceList("http://api.marketcloud.it/v0/currencies", token);
         else return null;
@@ -95,7 +82,20 @@ public class Currencies {
      * @return the data of the currency
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(String id) {
+    public JSONObject getById(String id) throws InterruptedException, ExecutionException, JSONException {
+        if (token != null)
+            return api.getById("http://api.marketcloud.it/v0/currencies/", id, token);
+        else return null;
+    }
+
+    /**
+     * Get data about a specific currency.
+     *
+     * @param id currency id
+     * @return the data of the currency
+     */
+    @SuppressWarnings("unused")
+    public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
         if (token != null)
             return api.getById("http://api.marketcloud.it/v0/currencies/", id, token);
         else return null;
@@ -109,22 +109,10 @@ public class Currencies {
      * @return true if the update was successful
      */
     @SuppressWarnings("unused")
-    public boolean update(String name, String formatting) {
-        try {
-            JSONObject jsonObject = toJsonObject(name, formatting);
+    public boolean update(String name, String formatting) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        JSONObject jsonObject = toJsonObject(name, formatting);
 
-            if (jsonObject != null)
-                return (boolean) ((JSONObject) new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "put",
-                                        "http://api.marketcloud.it/v0/currencies",
-                                        publicKey + ":" + token,
-                                        jsonObject.toString()})
-                        .get()
-                        .get(0)).get("status");
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException ignored) {}
-        return false;
+        return jsonObject != null && (boolean) ((JSONObject) new AsyncConnect(context).execute(new String[]{"put", "http://api.marketcloud.it/v0/currencies", publicKey + ":" + token, jsonObject.toString()}).get().get(0)).get("status");
     }
 
     /**
@@ -134,12 +122,8 @@ public class Currencies {
      * @return true if the delete was successful
      */
     @SuppressWarnings("unused")
-    public boolean delete(String id) {
-        try {
-            return (boolean) api.delete("http://api.marketcloud.it/v0/currencies/", id, token).get("status");
-        } catch (Exception e) {
-            return false;
-        }
+    public boolean delete(String id) throws InterruptedException, ExecutionException, JSONException {
+        return (boolean) api.delete("http://api.marketcloud.it/v0/currencies/", id, token).get("status");
     }
 
     /**
@@ -149,11 +133,7 @@ public class Currencies {
      * @param formatting currency symbol
      * @return JSONObject
      */
-    private JSONObject toJsonObject(String name, String formatting) {
-        try {
-            return new JSONObject().put("name", name).put("formatting", formatting);
-        } catch (JSONException e) {
-            return null;
-        }
+    private JSONObject toJsonObject(String name, String formatting) throws JSONException {
+        return new JSONObject().put("name", name).put("formatting", formatting);
     }
 }

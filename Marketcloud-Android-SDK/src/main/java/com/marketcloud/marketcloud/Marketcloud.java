@@ -30,17 +30,18 @@ public class Marketcloud {
 
     String publicKey;
     Context context;
-    Products products;
-    Brands brands;
-    Categories categories;
-    Shippings shippings;
-    TokenManager tokenManager;
-    Users users;
-    Carts carts;
-    Orders orders;
-    Addresses addresses;
-    Currencies currencies;
-    Taxes taxes;
+    public Products products;
+    public Brands brands;
+    public Categories categories;
+    public Shippings shippings;
+    public TokenManager tokenManager;
+    public Users users;
+    public Carts carts;
+    public Orders orders;
+    public Addresses addresses;
+    public Currencies currencies;
+    public Taxes taxes;
+    public Utilities utilities;
 
     /**
      * Constructor.
@@ -56,6 +57,7 @@ public class Marketcloud {
         categories = new Categories(publicKey, context);
         shippings = new Shippings(publicKey, context);
         taxes = new Taxes(publicKey, context);
+        utilities = new Utilities(context, publicKey);
         tokenManager = new TokenManager(context);
         users = new Users(publicKey, tokenManager, context);
         carts = new Carts(publicKey, tokenManager, context);

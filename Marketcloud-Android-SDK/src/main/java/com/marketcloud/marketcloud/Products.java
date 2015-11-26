@@ -18,9 +18,11 @@ package com.marketcloud.marketcloud;
 import android.content.Context;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Products class. <br />
@@ -29,7 +31,7 @@ import java.util.HashMap;
  */
 public class Products {
 ;
-    private APIDoor api;
+    private Utilities api;
 
     /**
      * Constructor.
@@ -37,7 +39,7 @@ public class Products {
      * @param key the public key to access the APIs
      */
     public Products(String key, Context context) {
-        api = new APIDoor(context, key);
+        api = new Utilities(context, key);
     }
 
     /**
@@ -47,7 +49,18 @@ public class Products {
      * @return the data of the product with the given ID
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(String id) {
+    public JSONObject getById(String id) throws InterruptedException, ExecutionException, JSONException {
+        return api.getById("http://api.marketcloud.it/v0/products/", id);
+    }
+
+    /**
+     * Retrieves the product with the given ID.
+     *
+     * @param id the ID of the product
+     * @return the data of the product with the given ID
+     */
+    @SuppressWarnings("unused")
+    public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
         return api.getById("http://api.marketcloud.it/v0/products/", id);
     }
 
@@ -58,7 +71,7 @@ public class Products {
      * @return a list of products that comply with the filters
      */
     @SuppressWarnings("unused")
-    public JSONArray list(HashMap<String, Object> map) {
+    public JSONArray list(HashMap<String, Object> map) throws ExecutionException, InterruptedException {
         return api.list("http://api.marketcloud.it/v0/products?", map);
     }
 }

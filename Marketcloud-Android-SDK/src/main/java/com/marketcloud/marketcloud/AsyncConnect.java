@@ -41,7 +41,7 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
     private boolean keepAlive = true;
 
     /**
-     * Contructor.
+     * Constructor.
      *
      * @param ct application context
      */
@@ -116,7 +116,9 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
                     return ja;
             }
 
-        } catch (UnsupportedEncodingException ignored) {}
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }

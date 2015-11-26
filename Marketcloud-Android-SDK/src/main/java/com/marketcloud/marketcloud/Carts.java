@@ -36,7 +36,7 @@ public class Carts {
 
     private String publicKey;
     private Context context;
-    private APIDoor api;
+    private Utilities api;
     private String token;
 
     /**
@@ -48,7 +48,7 @@ public class Carts {
      */
     public Carts(String key, TokenManager tokenManager, Context ct) {
         publicKey = key;
-        api = new APIDoor(ct, key);
+        api = new Utilities(ct, key);
         token = tokenManager.getSessionToken();
         context = ct;
     }
@@ -61,24 +61,22 @@ public class Carts {
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(String userid, Object[][] products) {
-        try {
-            JSONObject jo = toJsonObject(
-                    userid,
-                    toJsonArray(products));
+    public JSONObject create(String userid, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        JSONObject jo = toJsonObject(
+                userid,
+                toJsonArray(products));
 
-            if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "post",
-                                        "http://api.marketcloud.it/v0/carts",
-                                        publicKey + ":" + token,
-                                        jo.toString()})
-                        .get()
-                        .get(0);
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException ignored) {
-        }
+        if (jo != null)
+            return (JSONObject) new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "post",
+                                    "http://api.marketcloud.it/v0/carts",
+                                    publicKey + ":" + token,
+                                    jo.toString()})
+                    .get()
+                    .get(0);
+
         return null;
     }
 
@@ -89,23 +87,21 @@ public class Carts {
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(Object[][] products) {
-        try {
-            JSONObject jo = toJsonObject(
-                    toJsonArray(products));
+    public JSONObject create(Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        JSONObject jo = toJsonObject(
+                toJsonArray(products));
 
-            if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "post",
-                                        "http://api.marketcloud.it/v0/carts",
-                                        publicKey + ":" + token,
-                                        jo.toString()})
-                        .get()
-                        .get(0);
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException ignored) {
-        }
+        if (jo != null)
+            return (JSONObject) new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "post",
+                                    "http://api.marketcloud.it/v0/carts",
+                                    publicKey + ":" + token,
+                                    jo.toString()})
+                    .get()
+                    .get(0);
+
         return null;
     }
 
@@ -117,24 +113,22 @@ public class Carts {
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(String userid, JSONArray products) {
-        try {
-            JSONObject jo = toJsonObject(
-                    userid,
-                    products);
+    public JSONObject create(String userid, JSONArray products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        JSONObject jo = toJsonObject(
+                userid,
+                products);
 
-            if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "post",
-                                        "http://api.marketcloud.it/v0/carts",
-                                        publicKey + ":" + token,
-                                        jo.toString()})
-                        .get()
-                        .get(0);
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException ignored) {
-        }
+        if (jo != null)
+            return (JSONObject) new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "post",
+                                    "http://api.marketcloud.it/v0/carts",
+                                    publicKey + ":" + token,
+                                    jo.toString()})
+                    .get()
+                    .get(0);
+
         return null;
     }
 
@@ -145,23 +139,21 @@ public class Carts {
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(JSONArray products) {
-        try {
-            JSONObject jo = toJsonObject(
-                    products);
+    public JSONObject create(JSONArray products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        JSONObject jo = toJsonObject(
+                products);
 
-            if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "post",
-                                        "http://api.marketcloud.it/v0/carts",
-                                        publicKey + ":" + token,
-                                        jo.toString()})
-                        .get()
-                        .get(0);
-        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException ignored) {
-        }
+        if (jo != null)
+            return (JSONObject) new AsyncConnect(context)
+                    .execute(
+                            new String[]{
+                                    "post",
+                                    "http://api.marketcloud.it/v0/carts",
+                                    publicKey + ":" + token,
+                                    jo.toString()})
+                    .get()
+                    .get(0);
+
         return null;
     }
 
@@ -171,7 +163,7 @@ public class Carts {
      * @return a list with the data of all the carts of the application.
      */
     @SuppressWarnings("unused")
-    public JSONArray get() {
+    public JSONArray get() throws ExecutionException, InterruptedException {
         if (token != null)
             return api.getInstanceList("http://api.marketcloud.it/v0/carts", token);
         else return null;
@@ -184,7 +176,20 @@ public class Carts {
      * @return the data of the desired cart
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(String id) {
+    public JSONObject getById(String id) throws InterruptedException, ExecutionException, JSONException {
+        if (token != null)
+            return api.getById("http://api.marketcloud.it/v0/carts/", id, token);
+        else return null;
+    }
+
+    /**
+     * Returns the data of a specific cart.
+     *
+     * @param id the id of the desired cart
+     * @return the data of the desired cart
+     */
+    @SuppressWarnings("unused")
+    public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
         if (token != null)
             return api.getById("http://api.marketcloud.it/v0/carts/", id, token);
         else return null;
@@ -199,23 +204,22 @@ public class Carts {
      * @return the updated cart
      */
     @SuppressWarnings("unused")
-    public JSONObject add(String id, Object[][] products) {
-        if (token != null)
-            try {
-                JSONObject jo = toJsonObjectPatch("add", toJsonArray(products));
+    public JSONObject add(String id, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        if (token != null) {
+            JSONObject jo = toJsonObjectPatch("add", toJsonArray(products));
 
-                if (jo != null)
-                    return (JSONObject) new AsyncConnect(context)
-                            .execute(
-                                    new String[]{
-                                            "patch",
-                                            "http://api.marketcloud.it/v0/carts/" + id,
-                                            publicKey + ":" + token,
-                                            jo.toString()})
-                            .get()
-                            .get(0);
-            } catch (InterruptedException | ExecutionException | JSONException | NullPointerException ignored) {
-            }
+            if (jo != null)
+                return (JSONObject) new AsyncConnect(context)
+                        .execute(
+                                new String[]{
+                                        "patch",
+                                        "http://api.marketcloud.it/v0/carts/" + id,
+                                        publicKey + ":" + token,
+                                        jo.toString()})
+                        .get()
+                        .get(0);
+        }
+
         return null;
     }
 
@@ -227,23 +231,22 @@ public class Carts {
      * @return the updated cart
      */
     @SuppressWarnings("unused")
-    public JSONObject remove(String id, Object[] products) {
-        if (token != null)
-            try {
+    public JSONObject remove(String id, Object[] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        if (token != null) {
                 JSONObject jo = toJsonObjectPatch("remove", toJsonArray(products));
 
-                if (jo != null)
-                    return (JSONObject) new AsyncConnect(context)
-                            .execute(
-                                    new String[]{
-                                            "patch",
-                                            "http://api.marketcloud.it/v0/carts/" + id,
-                                            publicKey + ":" + token,
-                                            jo.toString()})
-                            .get()
-                            .get(0);
-            } catch (InterruptedException | ExecutionException | JSONException | NullPointerException ignored) {
-            }
+            if (jo != null)
+                return (JSONObject) new AsyncConnect(context)
+                        .execute(
+                                new String[]{
+                                        "patch",
+                                        "http://api.marketcloud.it/v0/carts/" + id,
+                                        publicKey + ":" + token,
+                                        jo.toString()})
+                        .get()
+                        .get(0);
+        }
+
         return null;
     }
 
@@ -256,23 +259,22 @@ public class Carts {
      * @return the updated cart
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String id, Object[][] products) {
-        if (token != null)
-            try {
-                JSONObject jo = toJsonObjectPatch("update", toJsonArray(products));
+    public JSONObject update(String id, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+        if (token != null) {
+            JSONObject jo = toJsonObjectPatch("update", toJsonArray(products));
 
-                if (jo != null)
-                    return (JSONObject) new AsyncConnect(context)
-                            .execute(
-                                    new String[]{
-                                            "patch",
-                                            "http://api.marketcloud.it/v0/carts/" + id,
-                                            publicKey + ":" + token,
-                                            jo.toString()})
-                            .get()
-                            .get(0);
-            } catch (InterruptedException | ExecutionException | JSONException | NullPointerException ignored) {
-            }
+            if (jo != null)
+                return (JSONObject) new AsyncConnect(context)
+                        .execute(
+                                new String[]{
+                                        "patch",
+                                        "http://api.marketcloud.it/v0/carts/" + id,
+                                        publicKey + ":" + token,
+                                        jo.toString()})
+                        .get()
+                        .get(0);
+        }
+
         return null;
     }
 
@@ -283,13 +285,8 @@ public class Carts {
      * @return true if successful, false if not
      */
     @SuppressWarnings("unused")
-    public boolean delete(String id) {
-        try {
-            if (token != null)
-                return (boolean) api.delete("http://api.marketcloud.it/v0/carts/", id, token).get("status");
-        } catch (JSONException ignored) {
-        }
-        return false;
+    public boolean delete(String id) throws InterruptedException, ExecutionException, JSONException {
+        return token != null && (boolean) api.delete("http://api.marketcloud.it/v0/carts/", id, token).get("status");
     }
 
 
@@ -299,21 +296,17 @@ public class Carts {
      * @param array the array that will be converted
      * @return the json array
      */
-    private JSONArray toJsonArray(Object[][] array) {
-        try {
-            JSONArray jsonArray = new JSONArray();
+    private JSONArray toJsonArray(Object[][] array) throws JSONException {
+        JSONArray jsonArray = new JSONArray();
 
-            for (Object[] i : array) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("product_id", (int) i[0]);
-                jsonObject.put("quantity", (int) i[1]);
-                jsonArray.put(jsonObject);
-            }
-
-            return jsonArray;
-        } catch (JSONException e) {
-            return null;
+        for (Object[] i : array) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("product_id", (int) i[0]);
+            jsonObject.put("quantity", (int) i[1]);
+            jsonArray.put(jsonObject);
         }
+
+        return jsonArray;
     }
 
     /**
@@ -322,20 +315,16 @@ public class Carts {
      * @param array the array that will be converted
      * @return the json array
      */
-    private JSONArray toJsonArray(Object[] array) {
-        try {
-            JSONArray jsonArray = new JSONArray();
+    private JSONArray toJsonArray(Object[] array) throws JSONException {
+        JSONArray jsonArray = new JSONArray();
 
-            for (Object i : array) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("product_id", (int) i);
-                jsonArray.put(jsonObject);
-            }
-
-            return jsonArray;
-        } catch (JSONException e) {
-            return null;
+        for (Object i : array) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("product_id", (int) i);
+            jsonArray.put(jsonObject);
         }
+
+        return jsonArray;
     }
 
     /**
@@ -345,12 +334,8 @@ public class Carts {
      * @param jsonArray the array of the items
      * @return a JSONObject with the given data
      */
-    private JSONObject toJsonObject(String userid, JSONArray jsonArray) {
-        try {
-            return new JSONObject().put("user_id", Integer.parseInt(userid)).put("items", jsonArray);
-        } catch (JSONException e) {
-            return null;
-        }
+    private JSONObject toJsonObject(String userid, JSONArray jsonArray) throws JSONException {
+        return new JSONObject().put("user_id", Integer.parseInt(userid)).put("items", jsonArray);
     }
 
     /**
@@ -360,12 +345,8 @@ public class Carts {
      * @param jsonArray the array of the items
      * @return a JSONObject with the given data
      */
-    private JSONObject toJsonObjectPatch(String op, JSONArray jsonArray) {
-        try {
-            return new JSONObject().put("op", op).put("items", jsonArray);
-        } catch (JSONException e) {
-            return null;
-        }
+    private JSONObject toJsonObjectPatch(String op, JSONArray jsonArray) throws JSONException {
+        return new JSONObject().put("op", op).put("items", jsonArray);
     }
 
     /**
@@ -374,11 +355,7 @@ public class Carts {
      * @param jsonArray the array of the items
      * @return a JSONObject with the given data
      */
-    private JSONObject toJsonObject(JSONArray jsonArray) {
-        try {
-            return new JSONObject().put("items", jsonArray);
-        } catch (JSONException e) {
-            return null;
-        }
+    private JSONObject toJsonObject(JSONArray jsonArray) throws JSONException {
+        return new JSONObject().put("items", jsonArray);
     }
 }

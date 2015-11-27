@@ -60,7 +60,7 @@ public class Brands {
      * @return a JSONArray containing a list of brands that comply with the given filter
      */
     @SuppressWarnings("unused")
-    public JSONArray list(HashMap<String, Object> map) throws ExecutionException, InterruptedException {
+    public JSONObject list(HashMap<String, Object> map) throws ExecutionException, InterruptedException, JSONException {
         return api.list("http://api.marketcloud.it/v0/brands?", map);
     }
 }

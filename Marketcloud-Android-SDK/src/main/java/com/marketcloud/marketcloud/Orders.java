@@ -33,7 +33,7 @@ public class Orders {
     private String publicKey;
     private Context context;
     private Utilities api;
-    private String token;
+    private TokenManager tm;
 
     /**
      * Constructor.
@@ -45,7 +45,7 @@ public class Orders {
     public Orders(String key, TokenManager tokenManager, Context ct) {
         publicKey = key;
         api = new Utilities(context, key);
-        token = tokenManager.getSessionToken();
+        tm = tokenManager;
         context = ct;
     }
 
@@ -60,7 +60,7 @@ public class Orders {
      */
     @SuppressWarnings("unused")
     public JSONObject create(int userid, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObjectSend(
                     shipping_address_id,
                     billing_address_id,
@@ -73,7 +73,7 @@ public class Orders {
                                 new String[]{
                                         "post",
                                         "http://api.marketcloud.it/v0/orders",
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
                         .get()
                         .get(0);
@@ -94,7 +94,7 @@ public class Orders {
      */
     @SuppressWarnings("unused")
     public JSONObject create(int userid, String state, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObjectSend(
                     state,
                     shipping_address_id,
@@ -108,7 +108,7 @@ public class Orders {
                                 new String[]{
                                         "post",
                                         "http://api.marketcloud.it/v0/orders",
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
                         .get()
                         .get(0);
@@ -128,7 +128,7 @@ public class Orders {
      */
     @SuppressWarnings("unused")
     public JSONObject create(int userid, int shipping_address_id, int billing_address_id, JSONArray items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObjectSend(
                     shipping_address_id,
                     billing_address_id,
@@ -141,7 +141,7 @@ public class Orders {
                                 new String[]{
                                         "post",
                                         "http://api.marketcloud.it/v0/orders",
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
                         .get()
                         .get(0);
@@ -180,14 +180,14 @@ public class Orders {
      */
     @SuppressWarnings("unused")
     public JSONObject create(JSONObject jo) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null)
+        if (tm.getSessionToken() != null)
             if (jo != null)
                 return (JSONObject) new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "post",
                                         "http://api.marketcloud.it/v0/orders",
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
                         .get()
                         .get(0);
@@ -201,9 +201,9 @@ public class Orders {
      * @return list of the user's orders
      */
     @SuppressWarnings("unused")
-    public JSONArray get() throws ExecutionException, InterruptedException {
-        if (token != null)
-            return api.getInstanceList("http://api.marketcloud.it/v0/orders", token);
+    public JSONObject get() throws ExecutionException, InterruptedException, JSONException {
+        if (tm.getSessionToken() != null)
+            return api.getInstanceList("http://api.marketcloud.it/v0/orders", tm.getSessionToken());
         else return null;
     }
 
@@ -215,8 +215,8 @@ public class Orders {
      */
     @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
-        if (token != null)
-            return api.getById("http://api.marketcloud.it/v0/orders/", id, token);
+        if (tm.getSessionToken() != null)
+            return api.getById("http://api.marketcloud.it/v0/orders/", id, tm.getSessionToken());
         else return null;
     }
 
@@ -232,7 +232,7 @@ public class Orders {
      */
     @SuppressWarnings("unused")
     public JSONObject update(int userid, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObjectSend(
                     shipping_address_id,
                     billing_address_id,
@@ -245,7 +245,7 @@ public class Orders {
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/orders",
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
                         .get()
                         .get(0);
@@ -266,7 +266,7 @@ public class Orders {
      */
     @SuppressWarnings("unused")
     public JSONObject update(int userid, String state, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObjectSend(
                     state,
                     shipping_address_id,
@@ -280,7 +280,7 @@ public class Orders {
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/orders",
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
                         .get()
                         .get(0);
@@ -300,7 +300,7 @@ public class Orders {
      */
     @SuppressWarnings("unused")
     public JSONObject update(int userid, int shipping_address_id, int billing_address_id, JSONArray items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObjectSend(
                     shipping_address_id,
                     billing_address_id,
@@ -313,7 +313,7 @@ public class Orders {
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/orders",
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
                         .get()
                         .get(0);
@@ -345,14 +345,14 @@ public class Orders {
      */
     @SuppressWarnings("unused")
     public JSONObject update(JSONObject jo) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null)
+        if (tm.getSessionToken() != null)
             if (jo != null)
                 return (JSONObject) new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/orders",
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
                         .get()
                         .get(0);

@@ -1,5 +1,7 @@
 CHANGELOG
 
+v0.9.7 --> logout implemented; token manager updated (now the tokens are checked in real time - needs more testing btw); implemented an async image loader
+
 v0.9.6 --> all IDs have been converted to int; added methods to get status and data from JSONObject/Array
 
 v0.9.5 --> fixed exceptions management; now all exceptions are thrown to the developer, who chooses how to manage them; solved a possible memory leak during async connections

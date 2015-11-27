@@ -55,6 +55,27 @@ public class TokenManager {
     }
 
     /**
+     * Deletes a token.
+     *
+     * @param name the name of the cookie to be deleted
+     */
+    public void deleteToken(String name) {
+
+        Cookie cookie = null;
+        boolean found = false;
+
+        for (Cookie c : myCookieStore.getCookies()) {
+            if (c.getName().equals(name)) {
+                cookie = c;
+                found = true;
+                break;
+            }
+        }
+
+        if (found) myCookieStore.deleteCookie(cookie);
+    }
+
+    /**
      * Sets a cookie.
      *
      * @param name cookie name

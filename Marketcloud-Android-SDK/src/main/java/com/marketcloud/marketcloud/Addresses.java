@@ -17,7 +17,6 @@ package com.marketcloud.marketcloud;
 
 import android.content.Context;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +37,7 @@ public class Addresses {
     private String publicKey;
     private Context context;
     private Utilities api;
-    private String token;
+    private TokenManager tm;
 
     /**
      * Constructor.
@@ -50,7 +49,7 @@ public class Addresses {
     public Addresses(String key, TokenManager tokenManager, Context ct) {
         publicKey = key;
         api = new Utilities(context, key);
-        token = tokenManager.getSessionToken();
+        tm = tokenManager;
         context = ct;
     }
 
@@ -63,7 +62,7 @@ public class Addresses {
      */
     @SuppressWarnings("unused")
     public JSONObject create(String name, String email) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
                 JSONObject jo = toJsonObject(name, email);
 
                 if (jo != null)
@@ -72,7 +71,7 @@ public class Addresses {
                                     new String[]{
                                             "post",
                                             "http://api.marketcloud.it/v0/addresses",
-                                            publicKey + ":" + token,
+                                            publicKey + ":" + tm.getSessionToken(),
                                             jo.toString()})
                             .get()
                             .get(0);
@@ -112,13 +111,13 @@ public class Addresses {
      */
     @SuppressWarnings("unused")
     public JSONObject create(JSONObject jsonObject) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null)
+        if (tm.getSessionToken() != null)
             return (JSONObject) new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/addresses",
-                                    publicKey + ":" + token,
+                                    publicKey + ":" + tm.getSessionToken(),
                                     jsonObject.toString()})
                     .get()
                     .get(0);
@@ -157,13 +156,13 @@ public class Addresses {
      */
     @SuppressWarnings("unused")
     public JSONObject create(String json) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null)
+        if (tm.getSessionToken() != null)
             return (JSONObject) new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/addresses",
-                                    publicKey + ":" + token,
+                                    publicKey + ":" + tm.getSessionToken(),
                                     json})
                     .get()
                     .get(0);
@@ -176,9 +175,9 @@ public class Addresses {
      * @return a list with the data of the user's addresses.
      */
     @SuppressWarnings("unused")
-    public JSONArray get() throws ExecutionException, InterruptedException {
-        if (token != null)
-            return api.getInstanceList("http://api.marketcloud.it/v0/addresses", token);
+    public JSONObject get() throws ExecutionException, InterruptedException, JSONException {
+        if (tm.getSessionToken() != null)
+            return api.getInstanceList("http://api.marketcloud.it/v0/addresses", tm.getSessionToken());
         else return null;
     }
 
@@ -190,8 +189,8 @@ public class Addresses {
      */
     @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
-        if (token != null)
-            return api.getById("http://api.marketcloud.it/v0/addresses/", id, token);
+        if (tm.getSessionToken() != null)
+            return api.getById("http://api.marketcloud.it/v0/addresses/", id, tm.getSessionToken());
         else return null;
     }
 
@@ -205,7 +204,7 @@ public class Addresses {
      */
     @SuppressWarnings("unused")
     public JSONObject update(int id, String name, String email) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObject(name, email);
 
             if (jo != null)
@@ -214,7 +213,7 @@ public class Addresses {
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/addresses/" + id,
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
                         .get()
                         .get(0);
@@ -250,13 +249,13 @@ public class Addresses {
      */
     @SuppressWarnings("unused")
     public JSONObject update(int id, JSONObject jsonObject) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null)
+        if (tm.getSessionToken() != null)
             return (JSONObject) new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "put",
                                     "http://api.marketcloud.it/v0/addresses/" + id,
-                                    publicKey + ":" + token,
+                                    publicKey + ":" + tm.getSessionToken(),
                                     jsonObject.toString()})
                     .get()
                     .get(0);
@@ -291,13 +290,13 @@ public class Addresses {
      */
     @SuppressWarnings("unused")
     public JSONObject update(int id, String json) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null)
+        if (tm.getSessionToken() != null)
             return (JSONObject) new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "put",
                                     "http://api.marketcloud.it/v0/addresses/" + id,
-                                    publicKey + ":" + token,
+                                    publicKey + ":" + tm.getSessionToken(),
                                     json})
                     .get()
                     .get(0);
@@ -313,7 +312,7 @@ public class Addresses {
      */
     @SuppressWarnings("unused")
     public boolean delete(int id) throws InterruptedException, ExecutionException, JSONException {
-        return token != null && (boolean) api.delete("http://api.marketcloud.it/v0/addresses/", id, token).get("status");
+        return tm.getSessionToken() != null && (boolean) api.delete("http://api.marketcloud.it/v0/addresses/", id, tm.getSessionToken()).get("status");
     }
 
     /**

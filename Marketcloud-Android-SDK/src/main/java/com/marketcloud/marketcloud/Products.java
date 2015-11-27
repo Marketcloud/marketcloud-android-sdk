@@ -17,7 +17,6 @@ package com.marketcloud.marketcloud;
 
 import android.content.Context;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,7 +59,7 @@ public class Products {
      * @return a list of products that comply with the filters
      */
     @SuppressWarnings("unused")
-    public JSONArray list(HashMap<String, Object> map) throws ExecutionException, InterruptedException {
+    public JSONObject list(HashMap<String, Object> map) throws ExecutionException, InterruptedException, JSONException {
         return api.list("http://api.marketcloud.it/v0/products?", map);
     }
 }

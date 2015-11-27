@@ -91,7 +91,7 @@ public class Utilities {
      * @param m HashMap containing a list of filters
      * @return a JSONArray containing a list of objects that comply with the given filter
      */
-    public JSONArray list(final String baseURL, final HashMap<String, Object> m) throws ExecutionException, InterruptedException {
+    public JSONObject list(final String baseURL, final HashMap<String, Object> m) throws ExecutionException, InterruptedException, JSONException {
 
         String url = baseURL;
 
@@ -109,13 +109,14 @@ public class Utilities {
             index++;
         }
 
-        return new AsyncConnect(context)
+        return (JSONObject) new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "get",
                                 url,
                                 publicKey})
-                .get();
+                .get()
+                .get(0);
     }
 
     /**
@@ -126,7 +127,7 @@ public class Utilities {
      * @param m HashMap containing a list of filters
      * @return a JSONArray containing a list of objects that comply with the given filter
      */
-    public JSONArray list(final String baseURL, String token, final HashMap<String, Object> m) throws ExecutionException, InterruptedException {
+    public JSONObject list(final String baseURL, String token, final HashMap<String, Object> m) throws ExecutionException, InterruptedException, JSONException {
 
         String url = baseURL.substring(0, baseURL.length() - 1) + "?";
 
@@ -144,13 +145,14 @@ public class Utilities {
             index++;
         }
 
-        return new AsyncConnect(context)
+        return (JSONObject) new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "get",
                                 url,
                                 publicKey + ":" + token})
-                .get();
+                .get()
+                .get(0);
     }
 
     /**
@@ -160,14 +162,15 @@ public class Utilities {
      * @param token a session token that identifies the user
      * @return a list with the data of all the users
      */
-    public JSONArray getInstanceList(String url, String token) throws ExecutionException, InterruptedException {
-        return new AsyncConnect(context)
+    public JSONObject getInstanceList(String url, String token) throws ExecutionException, InterruptedException, JSONException {
+        return (JSONObject) new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "get",
                                 url,
                                 publicKey + ":" + token})
-                .get();
+                .get()
+                .get(0);
     }
 
     /**
@@ -219,7 +222,7 @@ public class Utilities {
     @SuppressWarnings("unused")
     public JSONObject[] getData(JSONArray jsonArray) throws JSONException {
         JSONArray ja = jsonArray.getJSONObject(0).getJSONArray("data");
-        JSONObject jsonObject[] = new JSONObject[jsonArray.length()];
+        JSONObject jsonObject[] = new JSONObject[ja.length()];
 
         for (int i = 0; i < ja.length(); i++) {
             jsonObject[i] = ja.getJSONObject(i);

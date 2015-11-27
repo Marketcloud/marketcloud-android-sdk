@@ -37,7 +37,7 @@ public class Carts {
     private String publicKey;
     private Context context;
     private Utilities api;
-    private String token;
+    private TokenManager tm;
 
     /**
      * Constructor.
@@ -49,7 +49,7 @@ public class Carts {
     public Carts(String key, TokenManager tokenManager, Context ct) {
         publicKey = key;
         api = new Utilities(ct, key);
-        token = tokenManager.getSessionToken();
+        tm = tokenManager;
         context = ct;
     }
 
@@ -72,7 +72,7 @@ public class Carts {
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/carts",
-                                    publicKey + ":" + token,
+                                    publicKey + ":" + tm.getSessionToken(),
                                     jo.toString()})
                     .get()
                     .get(0);
@@ -97,7 +97,7 @@ public class Carts {
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/carts",
-                                    publicKey + ":" + token,
+                                    publicKey + ":" + tm.getSessionToken(),
                                     jo.toString()})
                     .get()
                     .get(0);
@@ -124,7 +124,7 @@ public class Carts {
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/carts",
-                                    publicKey + ":" + token,
+                                    publicKey + ":" + tm.getSessionToken(),
                                     jo.toString()})
                     .get()
                     .get(0);
@@ -149,24 +149,12 @@ public class Carts {
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/carts",
-                                    publicKey + ":" + token,
+                                    publicKey + ":" + tm.getSessionToken(),
                                     jo.toString()})
                     .get()
                     .get(0);
 
         return null;
-    }
-
-    /**
-     * Get the data of all the carts in the application.
-     *
-     * @return a list with the data of all the carts of the application.
-     */
-    @SuppressWarnings("unused")
-    public JSONArray get() throws ExecutionException, InterruptedException {
-        if (token != null)
-            return api.getInstanceList("http://api.marketcloud.it/v0/carts", token);
-        else return null;
     }
 
     /**
@@ -177,8 +165,8 @@ public class Carts {
      */
     @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
-        if (token != null)
-            return api.getById("http://api.marketcloud.it/v0/carts/", id, token);
+        if (tm.getSessionToken() != null)
+            return api.getById("http://api.marketcloud.it/v0/carts/", id, tm.getSessionToken());
         else return null;
     }
 
@@ -192,7 +180,7 @@ public class Carts {
      */
     @SuppressWarnings("unused")
     public JSONObject add(int id, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObjectPatch("add", toJsonArray(products));
 
             if (jo != null)
@@ -201,7 +189,7 @@ public class Carts {
                                 new String[]{
                                         "patch",
                                         "http://api.marketcloud.it/v0/carts/" + id,
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
                         .get()
                         .get(0);
@@ -219,7 +207,7 @@ public class Carts {
      */
     @SuppressWarnings("unused")
     public JSONObject remove(int id, Object[] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
                 JSONObject jo = toJsonObjectPatch("remove", toJsonArray(products));
 
             if (jo != null)
@@ -228,7 +216,7 @@ public class Carts {
                                 new String[]{
                                         "patch",
                                         "http://api.marketcloud.it/v0/carts/" + id,
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
                         .get()
                         .get(0);
@@ -247,7 +235,7 @@ public class Carts {
      */
     @SuppressWarnings("unused")
     public JSONObject update(int id, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObjectPatch("update", toJsonArray(products));
 
             if (jo != null)
@@ -256,7 +244,7 @@ public class Carts {
                                 new String[]{
                                         "patch",
                                         "http://api.marketcloud.it/v0/carts/" + id,
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
                         .get()
                         .get(0);
@@ -273,7 +261,7 @@ public class Carts {
      */
     @SuppressWarnings("unused")
     public boolean delete(int id) throws InterruptedException, ExecutionException, JSONException {
-        return token != null && (boolean) api.delete("http://api.marketcloud.it/v0/carts/", id, token).get("status");
+        return tm.getSessionToken() != null && (boolean) api.delete("http://api.marketcloud.it/v0/carts/", id, tm.getSessionToken()).get("status");
     }
 
 

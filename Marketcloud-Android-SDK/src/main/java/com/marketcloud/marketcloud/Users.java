@@ -33,7 +33,6 @@ public class Users {
     private String publicKey;
     private Context context;
     private Utilities api;
-    private String token;
     private TokenManager tm;
 
     /**
@@ -44,7 +43,6 @@ public class Users {
     public Users(String key, TokenManager tokenManager, Context ct) {
         publicKey = key;
         api = new Utilities(context, key);
-        token = tokenManager.getSessionToken();
         context = ct;
         tm = tokenManager;
     }
@@ -76,15 +74,22 @@ public class Users {
             if (!(boolean) jsonObject.get("status"))
                 return false;
             else {
-                token = jsonObject.getJSONObject("data").getString("token");
 
-                tm.setToken("auth", token);
+                tm.setToken("auth", jsonObject.getJSONObject("data").getString("token"));
 
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Logs out the current user.
+     */
+    @SuppressWarnings("unused")
+    public void logout() {
+        tm.deleteToken("auth");
     }
 
     /**
@@ -155,8 +160,8 @@ public class Users {
      */
     @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
-        if (token != null)
-            return api.getById("http://api.marketcloud.it/v0/users/", id, token);
+        if (tm.getSessionToken() != null)
+            return api.getById("http://api.marketcloud.it/v0/users/", id, tm.getSessionToken());
         else return null;
     }
 
@@ -166,9 +171,9 @@ public class Users {
      * @return list of users (and their data)
      */
     @SuppressWarnings("unused")
-    public JSONArray get() throws ExecutionException, InterruptedException {
-        if (token != null)
-            return api.getInstanceList("http://api.marketcloud.it/v0/users", token);
+    public JSONObject get() throws ExecutionException, InterruptedException, JSONException {
+        if (tm.getSessionToken() != null)
+            return api.getInstanceList("http://api.marketcloud.it/v0/users", tm.getSessionToken());
         else return null;
     }
 
@@ -183,7 +188,7 @@ public class Users {
      */
     @SuppressWarnings("unused")
     public JSONObject update(int id, String name, String email, String password) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObject(
                     name,
                     email,
@@ -195,7 +200,7 @@ public class Users {
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/users/" + id,
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
                         .get()
                         .get(0);
@@ -216,7 +221,7 @@ public class Users {
      */
     @SuppressWarnings("unused")
     public JSONObject update(int id, String name, String email, String password, String imageURL) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        if (token != null) {
+        if (tm.getSessionToken() != null) {
             JSONObject jo = toJsonObject(
                     name,
                     email,
@@ -229,7 +234,7 @@ public class Users {
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/users/" + id,
-                                        publicKey + ":" + token,
+                                        publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
                         .get()
                         .get(0);
@@ -246,7 +251,7 @@ public class Users {
      */
     @SuppressWarnings("unused")
     public boolean delete(int id) throws InterruptedException, ExecutionException, JSONException {
-        return (boolean) api.delete("http://api.marketcloud.it/v0/users/", id, token).get("status");
+        return (boolean) api.delete("http://api.marketcloud.it/v0/users/", id, tm.getSessionToken()).get("status");
     }
 
     /**

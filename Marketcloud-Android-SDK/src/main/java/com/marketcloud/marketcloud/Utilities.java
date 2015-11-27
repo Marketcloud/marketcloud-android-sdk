@@ -52,25 +52,6 @@ public class Utilities {
      * @param id the id of the object that the user wants to retrieve
      * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
      */
-    public JSONObject getById(final String baseURL, final String id) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-
-        return (JSONObject) new AsyncConnect(context)
-                .execute(
-                        new String[]{
-                                "get",
-                                baseURL + id,
-                                publicKey})
-                .get()
-                .get(0);
-    }
-
-    /**
-     * Returns the data about the object with the given ID.
-     *
-     * @param baseURL endpoint of the database
-     * @param id the id of the object that the user wants to retrieve
-     * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
-     */
     public JSONObject getById(final String baseURL, final int id) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
 
         return (JSONObject) new AsyncConnect(context)
@@ -79,26 +60,6 @@ public class Utilities {
                                 "get",
                                 baseURL + id,
                                 publicKey})
-                .get()
-                .get(0);
-    }
-
-    /**
-     * Returns the data about the object with the given ID.
-     *
-     * @param baseURL endpoint of the database
-     * @param id the id of the object that the user wants to retrieve
-     * @param token the session token that grants that the user is logged in
-     * @return a JSONObject containing the data about the given object, or null if the ID does not belong to any object
-     */
-    public JSONObject getById(final String baseURL, final String id, final String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-
-        return (JSONObject) new AsyncConnect(context)
-                .execute(
-                        new String[]{
-                                "get",
-                                baseURL + id,
-                                publicKey + ":" + token})
                 .get()
                 .get(0);
     }
@@ -217,14 +178,14 @@ public class Utilities {
      * @param token a session token that identifies the user
      * @return if the request was correct, it returns a status true. note: this happens even if the instance was already deleted
      */
-    public JSONObject delete(String url, String id, String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject delete(String url, int id, String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         return (JSONObject) new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "delete",
                                 url,
                                 publicKey + ":" + token,
-                                id})
+                                id + ""})
                 .get()
                 .get(0);
     }
@@ -246,5 +207,60 @@ public class Utilities {
                     return jsonObject.getJSONObject("data").getInt("id");
 
         return -1;
+    }
+
+    /**
+     * Retrieve data from a JSONArray
+     *
+     * @param jsonArray JSONArray that will be parsed
+     * @return array of JSONObjects containing the data of the JSONArray
+     * @throws JSONException usually thrown if the JSONArray is empty or null
+     */
+    @SuppressWarnings("unused")
+    public JSONObject[] getData(JSONArray jsonArray) throws JSONException {
+        JSONArray ja = jsonArray.getJSONObject(0).getJSONArray("data");
+        JSONObject jsonObject[] = new JSONObject[jsonArray.length()];
+
+        for (int i = 0; i < ja.length(); i++) {
+            jsonObject[i] = ja.getJSONObject(i);
+        }
+
+        return jsonObject;
+    }
+
+    /**
+     * Retrieve data from a JSONObject
+     *
+     * @param jsonObject JSONObject that will be parsed
+     * @return JSONObject containing the data
+     * @throws JSONException usually thrown if the JSONObject is empty or null
+     */
+    @SuppressWarnings("unused")
+    public JSONObject getData(JSONObject jsonObject) throws JSONException {
+        return jsonObject.getJSONObject("data");
+    }
+
+    /**
+     * Retrieves the "status" field in a JSONArray.
+     *
+     * @param jsonArray the JSONArray that will be parsed
+     * @return a boolean containing the state of the JSONArray
+     * @throws JSONException usually thrown if the "status" field does not exist
+     */
+    @SuppressWarnings("unused")
+    public boolean getStatus(JSONArray jsonArray) throws JSONException {
+        return jsonArray.getJSONObject(0).getBoolean("status");
+    }
+
+    /**
+     * Retrieves the "status" field in a JSONObject.
+     *
+     * @param jsonObject the JSONObject that will be parsed
+     * @return a boolean containing the status of the JSONObject
+     * @throws JSONException usually thrown if the "status" field does not exist
+     */
+    @SuppressWarnings("unused")
+    public boolean getStatus(JSONObject jsonObject) throws JSONException {
+        return jsonObject.getBoolean("status");
     }
 }

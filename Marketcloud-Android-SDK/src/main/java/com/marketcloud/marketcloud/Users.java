@@ -154,19 +154,6 @@ public class Users {
      * @return the data of the desired user
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(String id) throws InterruptedException, ExecutionException, JSONException {
-        if (token != null)
-            return api.getById("http://api.marketcloud.it/v0/users/", id, token);
-        else return null;
-    }
-
-    /**
-     * Returns the data of a specific user.
-     *
-     * @param id the id of the desired user
-     * @return the data of the desired user
-     */
-    @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
         if (token != null)
             return api.getById("http://api.marketcloud.it/v0/users/", id, token);
@@ -195,7 +182,7 @@ public class Users {
      * @return the data of the user after the update
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String id, String name, String email, String password) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject update(int id, String name, String email, String password) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObject(
                     name,
@@ -228,7 +215,7 @@ public class Users {
      * @return the data of the user after the update
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String id, String name, String email, String password, String imageURL) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject update(int id, String name, String email, String password, String imageURL) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObject(
                     name,
@@ -258,7 +245,7 @@ public class Users {
      * @return true if succeeded, false if not
      */
     @SuppressWarnings("unused")
-    public boolean delete(String id) throws InterruptedException, ExecutionException, JSONException {
+    public boolean delete(int id) throws InterruptedException, ExecutionException, JSONException {
         return (boolean) api.delete("http://api.marketcloud.it/v0/users/", id, token).get("status");
     }
 

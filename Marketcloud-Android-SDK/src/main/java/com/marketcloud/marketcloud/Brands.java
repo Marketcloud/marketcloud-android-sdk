@@ -49,17 +49,6 @@ public class Brands {
      * @return a JSONObject containing the data about the given brand, or null if the ID does not belong to any brand
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(final String id) throws InterruptedException, ExecutionException, JSONException {
-        return api.getById("http://api.marketcloud.it/v0/brands/", id);
-    }
-
-    /**
-     * Returns the data about the brand with the given ID.
-     *
-     * @param id the id of the brand that the user wants to retrieve
-     * @return a JSONObject containing the data about the given brand, or null if the ID does not belong to any brand
-     */
-    @SuppressWarnings("unused")
     public JSONObject getById(final int id) throws InterruptedException, ExecutionException, JSONException {
         return api.getById("http://api.marketcloud.it/v0/brands/", id);
     }

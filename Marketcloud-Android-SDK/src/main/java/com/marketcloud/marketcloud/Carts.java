@@ -61,7 +61,7 @@ public class Carts {
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(String userid, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject create(int userid, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         JSONObject jo = toJsonObject(
                 userid,
                 toJsonArray(products));
@@ -113,7 +113,7 @@ public class Carts {
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(String userid, JSONArray products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject create(int userid, JSONArray products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         JSONObject jo = toJsonObject(
                 userid,
                 products);
@@ -176,19 +176,6 @@ public class Carts {
      * @return the data of the desired cart
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(String id) throws InterruptedException, ExecutionException, JSONException {
-        if (token != null)
-            return api.getById("http://api.marketcloud.it/v0/carts/", id, token);
-        else return null;
-    }
-
-    /**
-     * Returns the data of a specific cart.
-     *
-     * @param id the id of the desired cart
-     * @return the data of the desired cart
-     */
-    @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
         if (token != null)
             return api.getById("http://api.marketcloud.it/v0/carts/", id, token);
@@ -204,7 +191,7 @@ public class Carts {
      * @return the updated cart
      */
     @SuppressWarnings("unused")
-    public JSONObject add(String id, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject add(int id, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObjectPatch("add", toJsonArray(products));
 
@@ -231,7 +218,7 @@ public class Carts {
      * @return the updated cart
      */
     @SuppressWarnings("unused")
-    public JSONObject remove(String id, Object[] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject remove(int id, Object[] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
                 JSONObject jo = toJsonObjectPatch("remove", toJsonArray(products));
 
@@ -259,7 +246,7 @@ public class Carts {
      * @return the updated cart
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String id, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject update(int id, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObjectPatch("update", toJsonArray(products));
 
@@ -285,7 +272,7 @@ public class Carts {
      * @return true if successful, false if not
      */
     @SuppressWarnings("unused")
-    public boolean delete(String id) throws InterruptedException, ExecutionException, JSONException {
+    public boolean delete(int id) throws InterruptedException, ExecutionException, JSONException {
         return token != null && (boolean) api.delete("http://api.marketcloud.it/v0/carts/", id, token).get("status");
     }
 
@@ -334,8 +321,8 @@ public class Carts {
      * @param jsonArray the array of the items
      * @return a JSONObject with the given data
      */
-    private JSONObject toJsonObject(String userid, JSONArray jsonArray) throws JSONException {
-        return new JSONObject().put("user_id", Integer.parseInt(userid)).put("items", jsonArray);
+    private JSONObject toJsonObject(int userid, JSONArray jsonArray) throws JSONException {
+        return new JSONObject().put("user_id", userid).put("items", jsonArray);
     }
 
     /**

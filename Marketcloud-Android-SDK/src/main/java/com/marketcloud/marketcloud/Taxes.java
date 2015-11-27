@@ -44,17 +44,6 @@ public class Taxes {
      * @return a JSONObject containing the data about the given tax, or null if the ID does not belong to any tax
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(final String id) throws InterruptedException, ExecutionException, JSONException {
-        return api.getById("http://api.marketcloud.it/v0/taxes/", id);
-    }
-
-    /**
-     * Returns the data about the tax with the given ID.
-     *
-     * @param id the id of the tax that the user wants to retrieve
-     * @return a JSONObject containing the data about the given tax, or null if the ID does not belong to any tax
-     */
-    @SuppressWarnings("unused")
     public JSONObject getById(final int id) throws InterruptedException, ExecutionException, JSONException {
         return api.getById("http://api.marketcloud.it/v0/taxes/", id);
     }

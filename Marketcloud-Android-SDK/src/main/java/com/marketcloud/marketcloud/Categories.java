@@ -49,17 +49,6 @@ public class Categories {
      * @return a JSONObject containing the data about the given category, or null if the ID does not belong to any category
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(final String id) throws InterruptedException, ExecutionException, JSONException {
-        return api.getById("http://api.marketcloud.it/v0/categories/", id);
-    }
-
-    /**
-     * Returns the data about the category with the given ID.
-     *
-     * @param id the id of the category that the user wants to retrieve
-     * @return a JSONObject containing the data about the given category, or null if the ID does not belong to any category
-     */
-    @SuppressWarnings("unused")
     public JSONObject getById(final int id) throws InterruptedException, ExecutionException, JSONException {
         return api.getById("http://api.marketcloud.it/v0/categories/", id);
     }

@@ -59,13 +59,13 @@ public class Orders {
      * @return the new order
      */
     @SuppressWarnings("unused")
-    public JSONObject create(String userid, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject create(int userid, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObjectSend(
                     shipping_address_id,
                     billing_address_id,
                     toJsonArray(items),
-                    Integer.parseInt(userid));
+                    userid);
 
             if (jo != null)
                 return (JSONObject) new AsyncConnect(context)
@@ -93,14 +93,14 @@ public class Orders {
      * @return the new order
      */
     @SuppressWarnings("unused")
-    public JSONObject create(String userid, String state, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject create(int userid, String state, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObjectSend(
                     state,
                     shipping_address_id,
                     billing_address_id,
                     toJsonArray(items),
-                    Integer.parseInt(userid));
+                    userid);
 
             if (jo != null)
                 return (JSONObject) new AsyncConnect(context)
@@ -127,13 +127,13 @@ public class Orders {
      * @return the new order
      */
     @SuppressWarnings("unused")
-    public JSONObject create(String userid, int shipping_address_id, int billing_address_id, JSONArray items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject create(int userid, int shipping_address_id, int billing_address_id, JSONArray items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObjectSend(
                     shipping_address_id,
                     billing_address_id,
                     items,
-                    Integer.parseInt(userid));
+                    userid);
 
             if (jo != null)
                 return (JSONObject) new AsyncConnect(context)
@@ -214,19 +214,6 @@ public class Orders {
      * @return the order data
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(String id) throws InterruptedException, ExecutionException, JSONException {
-        if (token != null)
-            return api.getById("http://api.marketcloud.it/v0/orders/", id, token);
-        else return null;
-    }
-
-    /**
-     * Get an order by its id.
-     *
-     * @param id order id
-     * @return the order data
-     */
-    @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
         if (token != null)
             return api.getById("http://api.marketcloud.it/v0/orders/", id, token);
@@ -244,13 +231,13 @@ public class Orders {
      * @return the updated order
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String userid, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject update(int userid, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObjectSend(
                     shipping_address_id,
                     billing_address_id,
                     toJsonArray(items),
-                    Integer.parseInt(userid));
+                    userid);
 
             if (jo != null)
                 return (JSONObject) new AsyncConnect(context)
@@ -278,14 +265,14 @@ public class Orders {
      * @return the updated order
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String userid, String state, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject update(int userid, String state, int shipping_address_id, int billing_address_id, Object[][] items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObjectSend(
                     state,
                     shipping_address_id,
                     billing_address_id,
                     toJsonArray(items),
-                    Integer.parseInt(userid));
+                    userid);
 
             if (jo != null)
                 return (JSONObject) new AsyncConnect(context)
@@ -312,13 +299,13 @@ public class Orders {
      * @return the updated order
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String userid, int shipping_address_id, int billing_address_id, JSONArray items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject update(int userid, int shipping_address_id, int billing_address_id, JSONArray items) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObjectSend(
                     shipping_address_id,
                     billing_address_id,
                     items,
-                    Integer.parseInt(userid));
+                    userid);
 
             if (jo != null)
                 return (JSONObject) new AsyncConnect(context)

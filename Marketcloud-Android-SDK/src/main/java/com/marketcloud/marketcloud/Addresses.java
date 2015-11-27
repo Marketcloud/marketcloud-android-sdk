@@ -189,19 +189,6 @@ public class Addresses {
      * @return the data of the address
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(String id) throws InterruptedException, ExecutionException, JSONException {
-        if (token != null)
-            return api.getById("http://api.marketcloud.it/v0/addresses/", id, token);
-        else return null;
-    }
-
-    /**
-     * Retrieve an address by its id.
-     *
-     * @param id address id
-     * @return the data of the address
-     */
-    @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
         if (token != null)
             return api.getById("http://api.marketcloud.it/v0/addresses/", id, token);
@@ -217,7 +204,7 @@ public class Addresses {
      * @return the data of the updated address
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String id, String name, String email) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject update(int id, String name, String email) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null) {
             JSONObject jo = toJsonObject(name, email);
 
@@ -262,7 +249,7 @@ public class Addresses {
      * @return the updated address
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String id, JSONObject jsonObject) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject update(int id, JSONObject jsonObject) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null)
             return (JSONObject) new AsyncConnect(context)
                     .execute(
@@ -303,7 +290,7 @@ public class Addresses {
      * @return the updated address
      */
     @SuppressWarnings("unused")
-    public JSONObject update(String id, String json) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject update(int id, String json) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (token != null)
             return (JSONObject) new AsyncConnect(context)
                     .execute(
@@ -325,7 +312,7 @@ public class Addresses {
      * @return true if deleted (now or in the past), false if not (something is wrong)
      */
     @SuppressWarnings("unused")
-    public boolean delete(String id) throws InterruptedException, ExecutionException, JSONException {
+    public boolean delete(int id) throws InterruptedException, ExecutionException, JSONException {
         return token != null && (boolean) api.delete("http://api.marketcloud.it/v0/addresses/", id, token).get("status");
     }
 

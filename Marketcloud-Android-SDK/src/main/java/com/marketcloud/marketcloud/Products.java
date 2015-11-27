@@ -49,17 +49,6 @@ public class Products {
      * @return the data of the product with the given ID
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(String id) throws InterruptedException, ExecutionException, JSONException {
-        return api.getById("http://api.marketcloud.it/v0/products/", id);
-    }
-
-    /**
-     * Retrieves the product with the given ID.
-     *
-     * @param id the ID of the product
-     * @return the data of the product with the given ID
-     */
-    @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
         return api.getById("http://api.marketcloud.it/v0/products/", id);
     }

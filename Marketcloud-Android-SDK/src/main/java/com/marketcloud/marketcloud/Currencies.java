@@ -82,19 +82,6 @@ public class Currencies {
      * @return the data of the currency
      */
     @SuppressWarnings("unused")
-    public JSONObject getById(String id) throws InterruptedException, ExecutionException, JSONException {
-        if (token != null)
-            return api.getById("http://api.marketcloud.it/v0/currencies/", id, token);
-        else return null;
-    }
-
-    /**
-     * Get data about a specific currency.
-     *
-     * @param id currency id
-     * @return the data of the currency
-     */
-    @SuppressWarnings("unused")
     public JSONObject getById(int id) throws InterruptedException, ExecutionException, JSONException {
         if (token != null)
             return api.getById("http://api.marketcloud.it/v0/currencies/", id, token);
@@ -122,7 +109,7 @@ public class Currencies {
      * @return true if the delete was successful
      */
     @SuppressWarnings("unused")
-    public boolean delete(String id) throws InterruptedException, ExecutionException, JSONException {
+    public boolean delete(int id) throws InterruptedException, ExecutionException, JSONException {
         return (boolean) api.delete("http://api.marketcloud.it/v0/currencies/", id, token).get("status");
     }
 

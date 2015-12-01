@@ -20,8 +20,8 @@ import android.os.AsyncTask;
 
 import com.loopj.android.http.SyncHttpClient;
 
-import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
@@ -34,10 +34,10 @@ import cz.msebera.android.httpclient.entity.StringEntity;
  * Performs an asynchronous HTTP operation, creating a background thread that executes a blocking call,
  * resulting in an asynchronous call.
  */
-public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
+public class AsyncConnect extends AsyncTask<String, Void, JSONObject> {
 
     private Context context;
-    private JSONArray ja;
+    private JSONObject jo;
     private boolean keepAlive = true;
 
     /**
@@ -56,7 +56,7 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
      * @return a JSONArray containing the response to the request
      */
     @Override
-    protected JSONArray doInBackground(String... params) {
+    protected JSONObject doInBackground(String... params) {
 
         try {
             //switcha tipo di connessione (possibilità: GET, POST, DELETE, PUT e PATCH)
@@ -71,15 +71,9 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
                     //parse the response
                     try {
-                        String response = new String(responseBody, "UTF-8");
-
-                        if (response.charAt(0) != '[')
-                            response = "[" + response + "]";
-
-                        ja = new JSONArray(response);
+                        jo = new JSONObject(new String(responseBody, "UTF-8"));
                     } catch (JSONException | UnsupportedEncodingException e) {
                         keepAlive = false;
                     }
@@ -87,7 +81,12 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                    keepAlive = false;
+                    //parse the response
+                    try {
+                        jo = new JSONObject(new String(responseBody, "UTF-8"));
+                    } catch (JSONException | UnsupportedEncodingException e) {
+                        keepAlive = false;
+                    }
                 }
             };
 
@@ -112,8 +111,8 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONArray> {
 
             //keep checking until the value is available or the break condition is met
             while (keepAlive) {
-                if (ja != null)
-                    return ja;
+                if (jo != null)
+                    return jo;
             }
 
         } catch (UnsupportedEncodingException e) {

@@ -17,7 +17,6 @@ package com.marketcloud.marketcloud;
 
 import android.content.Context;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,14 +53,13 @@ public class Utilities {
      */
     public JSONObject getById(final String baseURL, final int id) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
 
-        return (JSONObject) new AsyncConnect(context)
+        return new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "get",
                                 baseURL + id,
                                 publicKey})
-                .get()
-                .get(0);
+                .get();
     }
 
     /**
@@ -74,14 +72,13 @@ public class Utilities {
      */
     public JSONObject getById(final String baseURL, final int id, final String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
 
-        return (JSONObject) new AsyncConnect(context)
+        return new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "get",
                                 baseURL + id,
                                 publicKey + ":" + token})
-                .get()
-                .get(0);
+                .get();
     }
 
     /**
@@ -109,14 +106,13 @@ public class Utilities {
             index++;
         }
 
-        return (JSONObject) new AsyncConnect(context)
+        return new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "get",
                                 url,
                                 publicKey})
-                .get()
-                .get(0);
+                .get();
     }
 
     /**
@@ -145,14 +141,13 @@ public class Utilities {
             index++;
         }
 
-        return (JSONObject) new AsyncConnect(context)
+        return new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "get",
                                 url,
                                 publicKey + ":" + token})
-                .get()
-                .get(0);
+                .get();
     }
 
     /**
@@ -163,14 +158,13 @@ public class Utilities {
      * @return a list with the data of all the users
      */
     public JSONObject getInstanceList(String url, String token) throws ExecutionException, InterruptedException, JSONException {
-        return (JSONObject) new AsyncConnect(context)
+        return new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "get",
                                 url,
                                 publicKey + ":" + token})
-                .get()
-                .get(0);
+                .get();
     }
 
     /**
@@ -182,88 +176,13 @@ public class Utilities {
      * @return if the request was correct, it returns a status true. note: this happens even if the instance was already deleted
      */
     public JSONObject delete(String url, int id, String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        return (JSONObject) new AsyncConnect(context)
+        return new AsyncConnect(context)
                 .execute(
                         new String[]{
                                 "delete",
                                 url,
                                 publicKey + ":" + token,
                                 id + ""})
-                .get()
-                .get(0);
-    }
-
-    /**
-     * Retrieves (if it exists and is in a known position) the id of an instance, saved in a JSONObject.
-     *
-     * @param jsonObject the  json that will be analyzed
-     * @return the id (if exists)
-     */
-    @SuppressWarnings("unused")
-    public int getIdFromJSONObject(JSONObject jsonObject) throws JSONException {
-
-        if (jsonObject != null)
-            if (jsonObject.has("id"))
-                return jsonObject.getInt("id");
-            else if (jsonObject.has("data"))
-                if (jsonObject.getJSONObject("data").has("id"))
-                    return jsonObject.getJSONObject("data").getInt("id");
-
-        return -1;
-    }
-
-    /**
-     * Retrieve data from a JSONArray
-     *
-     * @param jsonArray JSONArray that will be parsed
-     * @return array of JSONObjects containing the data of the JSONArray
-     * @throws JSONException usually thrown if the JSONArray is empty or null
-     */
-    @SuppressWarnings("unused")
-    public JSONObject[] getData(JSONArray jsonArray) throws JSONException {
-        JSONArray ja = jsonArray.getJSONObject(0).getJSONArray("data");
-        JSONObject jsonObject[] = new JSONObject[ja.length()];
-
-        for (int i = 0; i < ja.length(); i++) {
-            jsonObject[i] = ja.getJSONObject(i);
-        }
-
-        return jsonObject;
-    }
-
-    /**
-     * Retrieve data from a JSONObject
-     *
-     * @param jsonObject JSONObject that will be parsed
-     * @return JSONObject containing the data
-     * @throws JSONException usually thrown if the JSONObject is empty or null
-     */
-    @SuppressWarnings("unused")
-    public JSONObject getData(JSONObject jsonObject) throws JSONException {
-        return jsonObject.getJSONObject("data");
-    }
-
-    /**
-     * Retrieves the "status" field in a JSONArray.
-     *
-     * @param jsonArray the JSONArray that will be parsed
-     * @return a boolean containing the state of the JSONArray
-     * @throws JSONException usually thrown if the "status" field does not exist
-     */
-    @SuppressWarnings("unused")
-    public boolean getStatus(JSONArray jsonArray) throws JSONException {
-        return jsonArray.getJSONObject(0).getBoolean("status");
-    }
-
-    /**
-     * Retrieves the "status" field in a JSONObject.
-     *
-     * @param jsonObject the JSONObject that will be parsed
-     * @return a boolean containing the status of the JSONObject
-     * @throws JSONException usually thrown if the "status" field does not exist
-     */
-    @SuppressWarnings("unused")
-    public boolean getStatus(JSONObject jsonObject) throws JSONException {
-        return jsonObject.getBoolean("status");
+                .get();
     }
 }

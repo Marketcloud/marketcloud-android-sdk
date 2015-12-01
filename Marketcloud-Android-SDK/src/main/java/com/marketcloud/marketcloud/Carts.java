@@ -67,15 +67,14 @@ public class Carts {
                 toJsonArray(products));
 
         if (jo != null)
-            return (JSONObject) new AsyncConnect(context)
+            return new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/carts",
                                     publicKey + ":" + tm.getSessionToken(),
                                     jo.toString()})
-                    .get()
-                    .get(0);
+                    .get();
 
         return null;
     }
@@ -92,15 +91,14 @@ public class Carts {
                 toJsonArray(products));
 
         if (jo != null)
-            return (JSONObject) new AsyncConnect(context)
+            return new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/carts",
                                     publicKey + ":" + tm.getSessionToken(),
                                     jo.toString()})
-                    .get()
-                    .get(0);
+                    .get();
 
         return null;
     }
@@ -119,15 +117,14 @@ public class Carts {
                 products);
 
         if (jo != null)
-            return (JSONObject) new AsyncConnect(context)
+            return new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/carts",
                                     publicKey + ":" + tm.getSessionToken(),
                                     jo.toString()})
-                    .get()
-                    .get(0);
+                    .get();
 
         return null;
     }
@@ -144,15 +141,14 @@ public class Carts {
                 products);
 
         if (jo != null)
-            return (JSONObject) new AsyncConnect(context)
+            return new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/carts",
                                     publicKey + ":" + tm.getSessionToken(),
                                     jo.toString()})
-                    .get()
-                    .get(0);
+                    .get();
 
         return null;
     }
@@ -184,15 +180,14 @@ public class Carts {
             JSONObject jo = toJsonObjectPatch("add", toJsonArray(products));
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "patch",
                                         "http://api.marketcloud.it/v0/carts/" + id,
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;
@@ -211,15 +206,14 @@ public class Carts {
                 JSONObject jo = toJsonObjectPatch("remove", toJsonArray(products));
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "patch",
                                         "http://api.marketcloud.it/v0/carts/" + id,
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;
@@ -239,15 +233,14 @@ public class Carts {
             JSONObject jo = toJsonObjectPatch("update", toJsonArray(products));
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "patch",
                                         "http://api.marketcloud.it/v0/carts/" + id,
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;

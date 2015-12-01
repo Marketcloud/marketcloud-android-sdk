@@ -17,7 +17,6 @@ package com.marketcloud.marketcloud;
 
 import android.content.Context;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -61,15 +60,14 @@ public class Users {
                 password);
 
         if (jsonObject != null) {
-            jsonObject = (JSONObject) new AsyncConnect(context)
+            jsonObject = new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/users/authenticate",
                                     publicKey,
                                     jsonObject.toString()})
-                    .get()
-                    .get(0);
+                    .get();
 
             if (!(boolean) jsonObject.get("status"))
                 return false;
@@ -108,15 +106,14 @@ public class Users {
                 password);
 
         if (jo != null)
-            return (JSONObject) new AsyncConnect(context)
+            return new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/users",
                                     publicKey,
                                     jo.toString()})
-                    .get()
-                    .get(0);
+                    .get();
 
         return null;
     }
@@ -139,15 +136,14 @@ public class Users {
                 imageURL);
 
         if (jo != null)
-            return (JSONObject) new AsyncConnect(context)
+            return new AsyncConnect(context)
                     .execute(
                             new String[]{
                                     "post",
                                     "http://api.marketcloud.it/v0/users",
                                     publicKey,
                                     jo.toString()})
-                    .get()
-                    .get(0);
+                    .get();
 
         return null;
     }
@@ -195,15 +191,14 @@ public class Users {
                     password);
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/users/" + id,
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;
@@ -229,15 +224,14 @@ public class Users {
                     imageURL);
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/users/" + id,
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString()})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;

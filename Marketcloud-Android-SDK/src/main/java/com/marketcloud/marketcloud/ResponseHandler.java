@@ -63,9 +63,9 @@ import cz.msebera.android.httpclient.util.ByteArrayBuffer;
 
 /**
  * Used to intercept and handle the responses from requests made using {@link AsyncHttpClient}. The
- * {@link #onSuccess(int, cz.msebera.android.httpclient.Header[], byte[])} method is designed to be anonymously
+ * {@link #onSuccess(int, Header[], byte[])} method is designed to be anonymously
  * overridden with your own response handling code. <p>&nbsp;</p> Additionally, you can override the
- * {@link #onFailure(int, cz.msebera.android.httpclient.Header[], byte[], Throwable)}, {@link #onStart()}, {@link
+ * {@link #onFailure(int, Header[], byte[], Throwable)}, {@link #onStart()}, {@link
  * #onFinish()}, {@link #onRetry(int)} and {@link #onProgress(long, long)} methods as required.
  * <p>&nbsp;</p> For example: <p>&nbsp;</p>
  * <pre>
@@ -483,7 +483,7 @@ public abstract class ResponseHandler implements ResponseHandlerInterface {
      *
      * @param entity can be null
      * @return response entity body or null
-     * @throws java.io.IOException if reading entity or creating byte array failed
+     * @throws IOException if reading entity or creating byte array failed
      */
     byte[] getResponseData(HttpEntity entity) throws IOException {
         byte[] responseBody = null;

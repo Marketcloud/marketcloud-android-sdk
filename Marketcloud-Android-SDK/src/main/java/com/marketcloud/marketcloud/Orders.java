@@ -68,15 +68,14 @@ public class Orders {
                     userid);
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "post",
                                         "http://api.marketcloud.it/v0/orders",
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;
@@ -103,15 +102,14 @@ public class Orders {
                     userid);
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "post",
                                         "http://api.marketcloud.it/v0/orders",
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;
@@ -136,15 +134,14 @@ public class Orders {
                     userid);
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "post",
                                         "http://api.marketcloud.it/v0/orders",
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;
@@ -182,15 +179,14 @@ public class Orders {
     public JSONObject create(JSONObject jo) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (tm.getSessionToken() != null)
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "post",
                                         "http://api.marketcloud.it/v0/orders",
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
-                        .get()
-                        .get(0);
+                        .get();
 
         return null;
     }
@@ -240,15 +236,14 @@ public class Orders {
                     userid);
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/orders",
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;
@@ -275,15 +270,14 @@ public class Orders {
                     userid);
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/orders",
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;
@@ -308,15 +302,14 @@ public class Orders {
                     userid);
 
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/orders",
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
-                        .get()
-                        .get(0);
+                        .get();
         }
 
         return null;
@@ -347,15 +340,14 @@ public class Orders {
     public JSONObject update(JSONObject jo) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         if (tm.getSessionToken() != null)
             if (jo != null)
-                return (JSONObject) new AsyncConnect(context)
+                return new AsyncConnect(context)
                         .execute(
                                 new String[]{
                                         "put",
                                         "http://api.marketcloud.it/v0/orders",
                                         publicKey + ":" + tm.getSessionToken(),
                                         jo.toString(),})
-                        .get()
-                        .get(0);
+                        .get();
 
         return null;
     }

@@ -42,6 +42,7 @@ public class Marketcloud {
     public Currencies currencies;
     public Taxes taxes;
     public Utilities utilities;
+    public Json json;
 
     /**
      * Constructor.
@@ -64,5 +65,6 @@ public class Marketcloud {
         orders = new Orders(publicKey, tokenManager, context);
         addresses = new Addresses(publicKey, tokenManager, context);
         currencies = new Currencies(publicKey, tokenManager, context);
+        json = new Json();
     }
 }

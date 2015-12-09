@@ -175,7 +175,7 @@ public abstract class ResponseHandler implements ResponseHandlerInterface {
 
     @Override
     public Object getTag() {
-        return this.TAG.get();
+        return this.TAG;
     }
 
     @Override

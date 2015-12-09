@@ -16,7 +16,6 @@
 package com.marketcloud.marketcloud;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.loopj.android.http.SyncHttpClient;
 
@@ -29,23 +28,21 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
- * AsyncGet class. <br />
+ * Connect class. <br />
  * <br />
- * Performs an asynchronous HTTP operation, creating a background thread that executes a blocking call,
- * resulting in an asynchronous call.
+ * Performs a synchronous HTTP request.
  */
-public class AsyncConnect extends AsyncTask<String, Void, JSONObject> {
+public class Connect {
 
     private Context context;
     private JSONObject jo;
-    private boolean keepAlive = true;
 
     /**
      * Constructor.
      *
      * @param ct application context
      */
-    public AsyncConnect(Context ct) {
+    public Connect(Context ct) {
         context = ct;
     }
 
@@ -55,11 +52,10 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONObject> {
      * @param params the url, the headers and the parameters of the HTTP request
      * @return a JSONArray containing the response to the request
      */
-    @Override
-    protected JSONObject doInBackground(String... params) {
+    protected JSONObject run(String... params) {
 
         try {
-            //switcha tipo di connessione (possibilità: GET, POST, DELETE, PUT e PATCH)
+            //switch connection types (possibilities: GET, POST, DELETE, PUT and PATCH)
             String type = params[0];
 
             //prepare the connection
@@ -74,9 +70,7 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONObject> {
                     //parse the response
                     try {
                         jo = new JSONObject(new String(responseBody, "UTF-8"));
-                    } catch (JSONException | UnsupportedEncodingException e) {
-                        keepAlive = false;
-                    }
+                    } catch (JSONException | UnsupportedEncodingException ignored) {}
                 }
 
                 @Override
@@ -84,9 +78,7 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONObject> {
                     //parse the response
                     try {
                         jo = new JSONObject(new String(responseBody, "UTF-8"));
-                    } catch (JSONException | UnsupportedEncodingException e) {
-                        keepAlive = false;
-                    }
+                    } catch (JSONException | UnsupportedEncodingException ignored) {}
                 }
             };
 
@@ -109,11 +101,8 @@ public class AsyncConnect extends AsyncTask<String, Void, JSONObject> {
                     break;
             }
 
-            //keep checking until the value is available or the break condition is met
-            while (keepAlive) {
-                if (jo != null)
-                    return jo;
-            }
+            //return output
+            return jo;
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

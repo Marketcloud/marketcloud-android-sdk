@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
  * Carts class. <br />
  * <br />
  * Creates a cart instance. Each user has by definition just one cart; when a new cart is created, if the server will
- * notice that a previous cart owned by the user still exists, it will execute a patch operation and provide the merged
+ * notice that a previous cart owned by the user still exists, it will run a patch operation and provide the merged
  * cart.<br />
  * Notice: this feature is still in beta development, so at the moment you should be able to create more than one cart
  * per user.
@@ -58,23 +58,32 @@ public class Carts {
      *
      * @param userid   the id of the user that is creating the cart
      * @param products the list of products that will be added to the cart
+     * @param token true if token needed, false if not
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(int userid, Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject create(int userid, Object[][] products, boolean token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         JSONObject jo = toJsonObject(
                 userid,
                 toJsonArray(products));
 
         if (jo != null)
-            return new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "post",
-                                    "http://api.marketcloud.it/v0/carts",
-                                    publicKey + ":" + tm.getSessionToken(),
-                                    jo.toString()})
-                    .get();
+            if (token)
+                return new Connect(context)
+                        .run(
+                                "post",
+                                "http://api.marketcloud.it/v0/carts",
+                                publicKey + ":" + tm.getSessionToken(),
+                                jo.toString())
+                        ;
+            else
+                return new Connect(context)
+                        .run(
+                                "post",
+                                "http://api.marketcloud.it/v0/carts",
+                                publicKey,
+                                jo.toString())
+                        ;
 
         return null;
     }
@@ -83,22 +92,31 @@ public class Carts {
      * Creates a new cart.
      *
      * @param products the list of products that will be added to the cart
+     * @param token true if token needed, false if not
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(Object[][] products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject create(Object[][] products, boolean token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         JSONObject jo = toJsonObject(
                 toJsonArray(products));
 
         if (jo != null)
-            return new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "post",
-                                    "http://api.marketcloud.it/v0/carts",
-                                    publicKey + ":" + tm.getSessionToken(),
-                                    jo.toString()})
-                    .get();
+            if (token)
+                return new Connect(context)
+                        .run(
+                                "post",
+                                "http://api.marketcloud.it/v0/carts",
+                                publicKey + ":" + tm.getSessionToken(),
+                                jo.toString())
+                        ;
+            else
+                return new Connect(context)
+                        .run(
+                                "post",
+                                "http://api.marketcloud.it/v0/carts",
+                                publicKey,
+                                jo.toString())
+                        ;
 
         return null;
     }
@@ -108,23 +126,32 @@ public class Carts {
      *
      * @param userid the id of the user that is creating the cart
      * @param products the list of products that will be added to the cart
+     * @param token true if token needed, false if not
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(int userid, JSONArray products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject create(int userid, JSONArray products, boolean token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         JSONObject jo = toJsonObject(
                 userid,
                 products);
 
         if (jo != null)
-            return new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "post",
-                                    "http://api.marketcloud.it/v0/carts",
-                                    publicKey + ":" + tm.getSessionToken(),
-                                    jo.toString()})
-                    .get();
+            if (token)
+                return new Connect(context)
+                        .run(
+                                "post",
+                                "http://api.marketcloud.it/v0/carts",
+                                publicKey + ":" + tm.getSessionToken(),
+                                jo.toString())
+                        ;
+            else
+                return new Connect(context)
+                        .run(
+                                "post",
+                                "http://api.marketcloud.it/v0/carts",
+                                publicKey,
+                                jo.toString())
+                        ;
 
         return null;
     }
@@ -133,23 +160,31 @@ public class Carts {
      * Creates a new cart.
      *
      * @param products the list of products that will be added to the cart
+     * @param token true if token needed, false if not
      * @return the cart
      */
     @SuppressWarnings("unused")
-    public JSONObject create(JSONArray products) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
+    public JSONObject create(JSONArray products, boolean token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         JSONObject jo = toJsonObject(
                 products);
 
         if (jo != null)
-            return new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "post",
-                                    "http://api.marketcloud.it/v0/carts",
-                                    publicKey + ":" + tm.getSessionToken(),
-                                    jo.toString()})
-                    .get();
-
+            if (token)
+                return new Connect(context)
+                        .run(
+                                "post",
+                                "http://api.marketcloud.it/v0/carts",
+                                publicKey + ":" + tm.getSessionToken(),
+                                jo.toString())
+                        ;
+            else
+                return new Connect(context)
+                        .run(
+                                "post",
+                                "http://api.marketcloud.it/v0/carts",
+                                publicKey,
+                                jo.toString())
+                        ;
         return null;
     }
 
@@ -180,14 +215,13 @@ public class Carts {
             JSONObject jo = toJsonObjectPatch("add", toJsonArray(products));
 
             if (jo != null)
-                return new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "patch",
-                                        "http://api.marketcloud.it/v0/carts/" + id,
-                                        publicKey + ":" + tm.getSessionToken(),
-                                        jo.toString()})
-                        .get();
+                return new Connect(context)
+                        .run(
+                                "patch",
+                                "http://api.marketcloud.it/v0/carts/" + id,
+                                publicKey + ":" + tm.getSessionToken(),
+                                jo.toString())
+                        ;
         }
 
         return null;
@@ -206,14 +240,13 @@ public class Carts {
                 JSONObject jo = toJsonObjectPatch("remove", toJsonArray(products));
 
             if (jo != null)
-                return new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "patch",
-                                        "http://api.marketcloud.it/v0/carts/" + id,
-                                        publicKey + ":" + tm.getSessionToken(),
-                                        jo.toString()})
-                        .get();
+                return new Connect(context)
+                        .run(
+                                "patch",
+                                "http://api.marketcloud.it/v0/carts/" + id,
+                                publicKey + ":" + tm.getSessionToken(),
+                                jo.toString())
+                        ;
         }
 
         return null;
@@ -233,14 +266,13 @@ public class Carts {
             JSONObject jo = toJsonObjectPatch("update", toJsonArray(products));
 
             if (jo != null)
-                return new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "patch",
-                                        "http://api.marketcloud.it/v0/carts/" + id,
-                                        publicKey + ":" + tm.getSessionToken(),
-                                        jo.toString()})
-                        .get();
+                return new Connect(context)
+                        .run(
+                                "patch",
+                                "http://api.marketcloud.it/v0/carts/" + id,
+                                publicKey + ":" + tm.getSessionToken(),
+                                jo.toString())
+                        ;
         }
 
         return null;

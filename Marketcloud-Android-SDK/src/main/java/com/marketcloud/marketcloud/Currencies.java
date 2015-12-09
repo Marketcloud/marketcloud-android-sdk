@@ -59,7 +59,7 @@ public class Currencies {
     public boolean create(String name, String formatting) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         JSONObject jsonObject = toJsonObject(name, formatting);
 
-        return jsonObject != null && (boolean) (new AsyncConnect(context).execute(new String[]{"post", "http://api.marketcloud.it/v0/currencies", publicKey + ":" + tm.getSessionToken(), jsonObject.toString()}).get()).get("status");
+        return jsonObject != null && (boolean) (new Connect(context).run(new String[]{"post", "http://api.marketcloud.it/v0/currencies", publicKey + ":" + tm.getSessionToken(), jsonObject.toString()})).get("status");
     }
 
     /**
@@ -98,7 +98,7 @@ public class Currencies {
     public boolean update(String name, String formatting) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
         JSONObject jsonObject = toJsonObject(name, formatting);
 
-        return jsonObject != null && (boolean) (new AsyncConnect(context).execute(new String[]{"put", "http://api.marketcloud.it/v0/currencies", publicKey + ":" + tm.getSessionToken(), jsonObject.toString()}).get()).get("status");
+        return jsonObject != null && (boolean) (new Connect(context).run(new String[]{"put", "http://api.marketcloud.it/v0/currencies", publicKey + ":" + tm.getSessionToken(), jsonObject.toString()})).get("status");
     }
 
     /**

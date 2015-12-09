@@ -60,14 +60,13 @@ public class Users {
                 password);
 
         if (jsonObject != null) {
-            jsonObject = new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "post",
-                                    "http://api.marketcloud.it/v0/users/authenticate",
-                                    publicKey,
-                                    jsonObject.toString()})
-                    .get();
+            jsonObject = new Connect(context)
+                    .run(
+                            "post",
+                            "http://api.marketcloud.it/v0/users/authenticate",
+                            publicKey,
+                            jsonObject.toString())
+                    ;
 
             if (!(boolean) jsonObject.get("status"))
                 return false;
@@ -106,14 +105,13 @@ public class Users {
                 password);
 
         if (jo != null)
-            return new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "post",
-                                    "http://api.marketcloud.it/v0/users",
-                                    publicKey,
-                                    jo.toString()})
-                    .get();
+            return new Connect(context)
+                    .run(
+                            "post",
+                            "http://api.marketcloud.it/v0/users",
+                            publicKey,
+                            jo.toString())
+                    ;
 
         return null;
     }
@@ -136,14 +134,13 @@ public class Users {
                 imageURL);
 
         if (jo != null)
-            return new AsyncConnect(context)
-                    .execute(
-                            new String[]{
-                                    "post",
-                                    "http://api.marketcloud.it/v0/users",
-                                    publicKey,
-                                    jo.toString()})
-                    .get();
+            return new Connect(context)
+                    .run(
+                            "post",
+                            "http://api.marketcloud.it/v0/users",
+                            publicKey,
+                            jo.toString())
+                    ;
 
         return null;
     }
@@ -191,14 +188,13 @@ public class Users {
                     password);
 
             if (jo != null)
-                return new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "put",
-                                        "http://api.marketcloud.it/v0/users/" + id,
-                                        publicKey + ":" + tm.getSessionToken(),
-                                        jo.toString()})
-                        .get();
+                return new Connect(context)
+                        .run(
+                                "put",
+                                "http://api.marketcloud.it/v0/users/" + id,
+                                publicKey + ":" + tm.getSessionToken(),
+                                jo.toString())
+                        ;
         }
 
         return null;
@@ -224,14 +220,13 @@ public class Users {
                     imageURL);
 
             if (jo != null)
-                return new AsyncConnect(context)
-                        .execute(
-                                new String[]{
-                                        "put",
-                                        "http://api.marketcloud.it/v0/users/" + id,
-                                        publicKey + ":" + tm.getSessionToken(),
-                                        jo.toString()})
-                        .get();
+                return new Connect(context)
+                        .run(
+                                "put",
+                                "http://api.marketcloud.it/v0/users/" + id,
+                                publicKey + ":" + tm.getSessionToken(),
+                                jo.toString())
+                        ;
         }
 
         return null;

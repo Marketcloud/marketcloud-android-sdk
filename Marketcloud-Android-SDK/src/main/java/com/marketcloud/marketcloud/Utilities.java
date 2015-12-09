@@ -53,13 +53,12 @@ public class Utilities {
      */
     public JSONObject getById(final String baseURL, final int id) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
 
-        return new AsyncConnect(context)
-                .execute(
-                        new String[]{
-                                "get",
-                                baseURL + id,
-                                publicKey})
-                .get();
+        return new Connect(context)
+                .run(
+                        "get",
+                        baseURL + id,
+                        publicKey)
+                ;
     }
 
     /**
@@ -72,13 +71,12 @@ public class Utilities {
      */
     public JSONObject getById(final String baseURL, final int id, final String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
 
-        return new AsyncConnect(context)
-                .execute(
-                        new String[]{
-                                "get",
-                                baseURL + id,
-                                publicKey + ":" + token})
-                .get();
+        return new Connect(context)
+                .run(
+                        "get",
+                        baseURL + id,
+                        publicKey + ":" + token)
+                ;
     }
 
     /**
@@ -106,13 +104,12 @@ public class Utilities {
             index++;
         }
 
-        return new AsyncConnect(context)
-                .execute(
-                        new String[]{
-                                "get",
-                                url,
-                                publicKey})
-                .get();
+        return new Connect(context)
+                .run(
+                        "get",
+                        url,
+                        publicKey)
+                ;
     }
 
     /**
@@ -141,13 +138,12 @@ public class Utilities {
             index++;
         }
 
-        return new AsyncConnect(context)
-                .execute(
-                        new String[]{
-                                "get",
-                                url,
-                                publicKey + ":" + token})
-                .get();
+        return new Connect(context)
+                .run(
+                        "get",
+                        url,
+                        publicKey + ":" + token)
+                ;
     }
 
     /**
@@ -158,13 +154,12 @@ public class Utilities {
      * @return a list with the data of all the users
      */
     public JSONObject getInstanceList(String url, String token) throws ExecutionException, InterruptedException, JSONException {
-        return new AsyncConnect(context)
-                .execute(
-                        new String[]{
-                                "get",
-                                url,
-                                publicKey + ":" + token})
-                .get();
+        return new Connect(context)
+                .run(
+                        "get",
+                        url,
+                        publicKey + ":" + token)
+                ;
     }
 
     /**
@@ -176,13 +171,12 @@ public class Utilities {
      * @return if the request was correct, it returns a status true. note: this happens even if the instance was already deleted
      */
     public JSONObject delete(String url, int id, String token) throws NullPointerException, ExecutionException, InterruptedException, JSONException {
-        return new AsyncConnect(context)
-                .execute(
-                        new String[]{
-                                "delete",
-                                url,
-                                publicKey + ":" + token,
-                                id + ""})
-                .get();
+        return new Connect(context)
+                .run(
+                        "delete",
+                        url,
+                        publicKey + ":" + token,
+                        id + "")
+                ;
     }
 }

@@ -1,5 +1,9 @@
 CHANGELOG
 
+v0.9.10 - 0.9.15 --> bug fixes and minor methods implemented
+
+v0.9.8 - 0.9.9 --> JSON helper class implemented: some useful JSON parsing and manipulating methods, realised specifically for the SDK, has been introduced; minor bug fixes
+
 v0.9.7 --> logout implemented; token manager updated (now the tokens are checked in real time - needs more testing btw); implemented an async image loader
 
 v0.9.6 --> all IDs have been converted to int; added methods to get status and data from JSONObject/Array

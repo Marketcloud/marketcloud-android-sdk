@@ -55,6 +55,22 @@ public class TokenManager {
     }
 
     /**
+     * Get the cookie with given name.
+     *
+     * @param name name of the cookie
+     * @return the cookie, if exists
+     */
+    @SuppressWarnings("unused")
+    public String getCookie(String name) {
+
+        for (Cookie c : myCookieStore.getCookies()) {
+            if (c.getName().equals(name)) return c.getValue();
+        }
+
+        return null;
+    }
+
+    /**
      * Deletes a token.
      *
      * @param name the name of the cookie to be deleted

@@ -1,4 +1,4 @@
-# marketcloud-android-sdk
+# Marketcloud Android™ SDK
 
 The official repository for Marketcloud Android SDK (beta).
 
@@ -21,6 +21,10 @@ The latest stable version of the SDK is 0.9.15; newer versions may be uploaded t
 A sample application, realised using the SDK, has been published in [this repo](https://github.com/Marketcloud/marketcloud-android-sample.git).
 
 ## License ##
+
+1. Android™ is a copyright of Google Inc. and is used here according to the [Legal Notice](http://developer.android.com/legal.html).
+
+2. For the SDK:
 
 Copyright 2015 [Marketcloud](http://www.marketcloud.it)
 

@@ -1,6 +1,6 @@
-# Marketcloud Android™ SDK
+# Marketcloud SDK for Android™
 
-The official repository for Marketcloud Android SDK (beta).
+Marketcloud is a mobile-first e-commerce backend as a service. If you wish to use this SDK in order to build your own Android application, you have to subscribe to [Marketcloud's program](http://www.marketcloud.it) (actually in beta).
 
 ## Note: HTTPS connection is not available! ##
 
@@ -39,3 +39,5 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+Special thanks to [Android Async Http](https://github.com/loopj/android-async-http) for the network library.

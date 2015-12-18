@@ -40,4 +40,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Special thanks to [Android Async Http](https://github.com/loopj/android-async-http) for the network library.
+3. Special thanks to [Android Async Http](https://github.com/loopj/android-async-http) for the network library. 
+
+4. Check the NOTICE.txt file for any additional copyright notice.

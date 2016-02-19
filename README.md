@@ -2,10 +2,6 @@
 
 Marketcloud is a mobile-first e-commerce backend as a service. If you wish to use this SDK in order to build your own Android application, you have to subscribe to [Marketcloud's program](http://www.marketcloud.it) (actually in beta).
 
-## Note: HTTPS connection is not available! ##
-
-#### At the moment, the connections to the database are not crypted. DO NOT USE IT FOR SENSIBLE CONNECTIONS! DO NOT SEND SENSIBLE/PRIVATE/PERSONAL DATA USING THIS SERVICE! ####
-
 ## How to use ##
 
 The SDK has been published on JCenter.
@@ -39,6 +35,10 @@ A sample application, realised using the SDK, has been published in [this repo](
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+    
+## HTTPS##
+Right now, the https protocol is not available. It will be released soon.
+
 
 ###### Additional ######
 

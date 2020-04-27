@@ -1,3 +1,7 @@
+## Please note that this project is no longer maintained.
+
+
+
 # Marketcloud SDK for Android™
 
 Marketcloud is a mobile-first e-commerce backend as a service. To use this SDK in order to build your own Android application, you have to subscribe to [Marketcloud's backend](http://www.marketcloud.it) (right now in beta).
